@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="base.definition" template="/WEB-INF/tiles/layout.jsp">
+		<put-attribute name="title" value="Ansell Guardian" />
+		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+	</definition>
+	
+	<definition name="welcomePage.tile" template="/WEB-INF/jsp/welcomePage.jsp">
+		<put-attribute name="title" value="Ansell Guardian" />
+		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+	</definition>
+	
+	<definition name="baseerror.definition" template="/WEB-INF/tiles/layout.jsp">
+		<put-attribute name="title" value="Ansell Guardian" />
+		<put-attribute name="header" value="/WEB-INF/tiles/baseheader.jsp" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+	</definition>
+	
+	<definition name="askContainer.tile" extends="base.definition">
+		<put-attribute name="title" value="Ansell Sales Knowledge" />
+		<put-attribute name="body" value="/WEB-INF/jsp/askContainer.jsp" />
+	</definition>
+	
+	<!-- <definition name="welcomePage.tile" extends="base.definition">
+		<put-attribute name="title" value="Ansell Sales Knowledge" />
+		<put-attribute name="body" value="/WEB-INF/jsp/welcomePage.jsp" />
+	</definition> -->
+	
+</tiles-definitions>
