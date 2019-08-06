@@ -7,24 +7,25 @@
     </mat-card-title>
     <mat-card-content>
       <div class="form-container">
-          <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
-            <mat-form-field>
-                <input matInput placeholder="Username"
-                       formControlName="username">
-              <mat-error *ngIf="!loginForm.get('username').valid">
-                  Enter username
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Password" type="password" formControlName="password">
-              <mat-error *ngIf="!loginForm.get('password').valid">
-                Enter password
-              </mat-error>
-            </mat-form-field>
-            <div>
-              <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid" >Submit</button>
-            </div>
-          </form>
+        <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+          <mat-form-field class="form-field">
+            <input matInput placeholder="Username" formControlName="username">
+            <mat-error *ngIf="!loginForm.get('username').valid">
+              Enter username
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <input matInput placeholder="Password" type="password" formControlName="password">
+            <mat-error *ngIf="!loginForm.get('password').valid">
+              Enter password
+            </mat-error>
+          </mat-form-field>
+          <div class="form-field">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
     </mat-card-content>
   </mat-card>
