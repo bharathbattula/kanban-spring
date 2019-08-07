@@ -1,5 +1,14 @@
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatCardModule, MatFormFieldModule, MatTabsModule} from "@angular/material";
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatListModule,
+  MatSidenavModule,
+  MatTabsModule,
+  MatToolbarModule
+} from "@angular/material";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 
 
@@ -10,14 +19,22 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatCardModule,
     DragDropModule,
     MatTabsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
   ],
   exports : [
     MatButtonModule,
     MatCardModule,
     DragDropModule,
     MatTabsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
   ]
 })
 export class MaterialModule { }
