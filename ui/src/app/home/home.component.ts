@@ -1,13 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material";
 import {HeaderComponent} from "./header/header.component";
+import {MediaObserver} from "@angular/flex-layout";
+import {MediaMatcher} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   @ViewChild('sidenav', {static: true}) sideNavigationEle: MatSidenav;
   @ViewChild('appHeader', {static: true}) appHeader: HeaderComponent;
@@ -17,10 +19,22 @@ export class HomeComponent implements OnInit {
 
   mediaQuery: MediaQueryList;
 
-  constructor() {
+  private _mediaQueryListner: () => void;
+
+  constructor(public media: MediaObserver,
+              changeDectorRef: ChangeDetectorRef,
+              mediaMatcher: MediaMatcher) {
+    this.mediaQuery = mediaMatcher.matchMedia('(max-width: 600px)');
+    this._mediaQueryListner = () => changeDectorRef.detectChanges();
+    this.mediaQuery.addListener(this._mediaQueryListner);
+
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy(): void {
+    this.mediaQuery.removeListener(this._mediaQueryListner);
   }
 
 }

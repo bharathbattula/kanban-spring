@@ -1,9 +1,10 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav style="text-align: center">
+  <mat-sidenav #sidenav [mode]="mediaQuery.matches ? 'over': 'side'"
+               [opened]="mediaQuery.matches ? false : true" style="text-align: center">
     <app-sidenav></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header #appHeader></app-header>
+    <app-header #appHeader (sidenavToggle)="sidenav.toggle()"></app-header>
     <div class="bottom-fab">
       <button mat-fab color="accent">
         <mat-icon>add</mat-icon>
