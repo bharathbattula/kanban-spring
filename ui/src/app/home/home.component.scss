@@ -1,0 +1,24 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+  height: 100%;
+}
+
+/*
+mat-sidenav {
+    width: 250px;
+}
+  */
+main {
+  padding: 10px;
+}
+
+.bottom-fab {
+  bottom: 25px; /* Ensure it's 5 px from the bottom */
+  right: 35px;
+  position: fixed; /* Sticks it in position when scrolling */
+}

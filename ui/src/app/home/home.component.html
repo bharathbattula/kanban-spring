@@ -1,1 +1,13 @@
-<p>home works!</p>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav style="text-align: center">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header #appHeader></app-header>
+    <div class="bottom-fab">
+      <button mat-fab color="accent">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,11 @@
+<mat-nav-list>
+  <mat-list-item>
+    <button mat-raised-button color="accent" style="width: 100%">
+      <mat-icon>add</mat-icon> <span>Add Project</span>
+    </button>
+    <mat-divider mat-inset></mat-divider>
+  </mat-list-item>
+  <mat-list-item *ngFor="let project of projects">
+    {{project.name}}
+  </mat-list-item>
+</mat-nav-list>
