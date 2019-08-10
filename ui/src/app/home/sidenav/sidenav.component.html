@@ -1,5 +1,5 @@
 <mat-nav-list>
-  <mat-list-item>
+  <mat-list-item disableRipple [ngClass]="{'bigScreen' : changeWidth, 'no-hover' : true }">
     <button mat-raised-button color="accent" style="width: 100%">
       <mat-icon>add</mat-icon> <span>Add Project</span>
     </button>

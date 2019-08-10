@@ -1,7 +1,7 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav [mode]="mediaQuery.matches ? 'over': 'side'"
                [opened]="mediaQuery.matches ? false : true" style="text-align: center">
-    <app-sidenav></app-sidenav>
+    <app-sidenav [bigScreen]="mediaQuery.matches ? true : false"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
     <app-header #appHeader (sidenavToggle)="sidenav.toggle()"></app-header>

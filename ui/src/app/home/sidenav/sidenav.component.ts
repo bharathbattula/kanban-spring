@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Project} from "../../model/Project";
 
 const PROJECTS:Project[] = [
@@ -12,6 +12,9 @@ const PROJECTS:Project[] = [
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+
+  @Input('bigScreen')
+  changeWidth = true;
 
   projects = PROJECTS;
 

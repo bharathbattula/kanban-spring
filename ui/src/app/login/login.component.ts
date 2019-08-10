@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RestService} from "../rest.service";
 import {Login} from "../model/Login";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
 
   loginForm:FormGroup;
 
-  constructor(private fb:FormBuilder, private rest:RestService ) { }
+  constructor(private fb: FormBuilder, private rest: RestService, private router: Router) {
+  }
 
   ngOnInit() {
     this.username = new FormControl("", [Validators.required]);
@@ -25,6 +27,7 @@ export class LoginComponent implements OnInit {
       username:['', Validators.required],
       password:['', Validators.required]
     })
+    
 
   }
 
@@ -33,7 +36,12 @@ export class LoginComponent implements OnInit {
       console.log(formValue);
       const loginRequstObj = new Login(formValue.username, formValue.password);
       this.rest.request(loginRequstObj,'api/auth/signin','POST')
-        .then(response => console.log(`response from server ${response}`))
+        .then(response => {
+            console.log(`response from server ${response.token}`)
+            this.rest.setToken(response.token);
+            this.router.navigateByUrl('app');
+          }
+        )
         .catch(error => console.error(`Failed ${error}`));
     } else {
       console.error('Form is not valid');

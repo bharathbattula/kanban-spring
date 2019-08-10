@@ -8,10 +8,12 @@ import {MaterialModule} from "./material.module";
 import {LoginComponent} from "./login/login.component";
 import {MatInputModule} from "@angular/material";
 import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './home/header/header.component';
-import { SidenavComponent } from './home/sidenav/sidenav.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HomeComponent} from './home/home.component';
+import {HeaderComponent} from './home/header/header.component';
+import {SidenavComponent} from './home/sidenav/sidenav.component';
+import {AppRequestInterceptor} from "./app.request.interceptor";
+import {CookieService} from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
@@ -30,7 +32,14 @@ import { SidenavComponent } from './home/sidenav/sidenav.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppRequestInterceptor,
+      multi: true
+    },
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
