@@ -17,7 +17,7 @@ export class RestService {
 
     switch (requestMethod) {
       case "POST":
-        return this.http.post(this.host + "/" + endpoint, requestBody,)
+        return this.http.post(this.host + "/" + endpoint, requestBody)
           .toPromise()
           .then(response => response);
 

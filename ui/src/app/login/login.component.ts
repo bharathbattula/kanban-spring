@@ -37,12 +37,11 @@ export class LoginComponent implements OnInit {
       const loginRequstObj = new Login(formValue.username, formValue.password);
       this.rest.request(loginRequstObj,'api/auth/signin','POST')
         .then(response => {
-            console.log(`response from server ${response.token}`)
-            this.rest.setToken(response.token);
-            this.router.navigateByUrl('app');
+          this.rest.setToken(response.token);
+          this.router.navigateByUrl('app');
           }
         )
-        .catch(error => console.error(`Failed ${error}`));
+        .catch(error => console.error(`Failed ${error.error}`));
     } else {
       console.error('Form is not valid');
     }

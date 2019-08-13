@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.rest.request(null, "hello", "GET")
-      .then(response => console.log(`response :: ${response}`))
+      .then(response => console.log(`response :: ${response.success}`))
       .catch(error => console.log(`error :: ${error}`))
   }
 
