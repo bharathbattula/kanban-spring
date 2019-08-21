@@ -1,23 +1,22 @@
 package com.kanban.api.controller;
 
 import com.kanban.api.config.authentication.JwtTokenProvider;
+import com.kanban.api.config.authentication.UserPrincipal;
 import com.kanban.api.exception.ApplicationException;
 import com.kanban.api.model.Role;
 import com.kanban.api.model.RoleName;
 import com.kanban.api.model.User;
+import com.kanban.api.model.UserSession;
 import com.kanban.api.repository.RoleRepository;
 import com.kanban.api.repository.UserRepository;
 import com.kanban.api.request.LoginDto;
 import com.kanban.api.request.SignUpDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,11 +27,12 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.Collections;
 
+import static com.kanban.api.common.Constants.BASE_API;
+
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(BASE_API + "/auth")
 public class AuthController {
 
 	@Autowired
@@ -57,28 +57,22 @@ public class AuthController {
 						loginDto.getPassword())
 		);
 
-		final Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
-
-		final Collection<? extends GrantedAuthority> grantedAuthority = authentication1.getAuthorities();
-
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		final String token = this.tokenProvider.generateToken(authentication);
 
-		final HttpCookie cookie = ResponseCookie.from("token", token)
-				.path("/")
-				.build();
-
 		final Cookie cookie1 = new Cookie("token", token);
 		cookie1.setPath("/");
 		response.addCookie(cookie1);
+
+		final UserSession userSession = UserSession.create((UserPrincipal) authentication.getPrincipal(), token);
 
 		/*return ResponseEntity
 				.ok()
 				.header(HttpHeaders.COOKIE, cookie.toString())
 				.body(Collections.singletonMap("success", token));
 */
-		return ResponseEntity.ok(Collections.singletonMap("token", token));
+		return ResponseEntity.status(HttpStatus.CREATED).body(userSession);
 	}
 
 
@@ -94,6 +88,7 @@ public class AuthController {
 
 		final User user = new User(signUpDto.getName(), signUpDto.getUsername(),
 				signUpDto.getEmail(), signUpDto.getPassword());
+
 
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 

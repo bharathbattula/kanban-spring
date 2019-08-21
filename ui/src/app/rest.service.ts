@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {UserSession} from "./model/UserSession";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class RestService {
   private host = "http://localhost:8080";
 
   private TOKEN = "bearer";
-
+  private CURRENT_USER = "_current-user";
 
   constructor(private http:HttpClient) { }
 
@@ -28,12 +29,20 @@ export class RestService {
     }
   }
 
-  setToken(token: string) {
-    localStorage.setItem(this.TOKEN, token);
+  setSession(session: UserSession) {
+    localStorage.setItem(this.CURRENT_USER, JSON.stringify(session));
   }
 
   getToken(): string {
-    return localStorage.getItem(this.TOKEN);
+    const session = JSON.parse(localStorage.getItem(this.CURRENT_USER));
+
+    if (session)
+      return session[this.TOKEN];
+
+    return null;
   }
 
+  logout() {
+    localStorage.removeItem(this.CURRENT_USER);
+  }
 }
