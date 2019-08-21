@@ -1,0 +1,25 @@
+@import "~src/theme";
+
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.avatar-container {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  background-color: $accent;
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
+.avatar-initial {
+  position: relative;
+  top: 10px;
+  color: #fff;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-weight: bold;
+}

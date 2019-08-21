@@ -14,6 +14,8 @@ import {HeaderComponent} from './home/header/header.component';
 import {SidenavComponent} from './home/sidenav/sidenav.component';
 import {AppRequestInterceptor} from "./app.request.interceptor";
 import {CookieService} from "ngx-cookie-service";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import { BoardComponent } from './board/board.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import {CookieService} from "ngx-cookie-service";
     LoginComponent,
     HomeComponent,
     HeaderComponent,
-    SidenavComponent
+    SidenavComponent,
+    BoardComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import {CookieService} from "ngx-cookie-service";
     MaterialModule,
     MatInputModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FlexLayoutModule
   ],
   providers: [
     {

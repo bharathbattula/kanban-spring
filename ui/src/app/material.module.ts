@@ -5,6 +5,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatListModule,
+  MatMenuModule,
   MatSidenavModule,
   MatTabsModule,
   MatToolbarModule
@@ -24,6 +25,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatToolbarModule,
     MatIconModule,
     MatListModule,
+    MatMenuModule
   ],
   exports : [
     MatButtonModule,
@@ -35,6 +37,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatToolbarModule,
     MatIconModule,
     MatListModule,
+    MatMenuModule
   ]
 })
 export class MaterialModule { }

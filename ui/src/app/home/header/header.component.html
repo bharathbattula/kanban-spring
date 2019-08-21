@@ -4,4 +4,22 @@
       <mat-icon>menu</mat-icon>
     </button>
   </div>
+  <span fxFlex></span>
+  <!--  <button mat-icon-button [matMenuTriggerFor]="profile">-->
+  <!--    <mat-icon>more_vert</mat-icon>-->
+  <!--  </button>-->
+  <div class="avatar-container" [matMenuTriggerFor]="profile">
+    <span class="avatar-initial">BB</span>
+  </div>
 </mat-toolbar>
+
+<mat-menu #profile="matMenu" yPosition="below" xPosition="before">
+  <mat-nav-list>
+    <mat-list-item>
+      Profile
+    </mat-list-item>
+    <mat-list-item (click)="logout($event)">
+      Logout
+    </mat-list-item>
+  </mat-nav-list>
+</mat-menu>

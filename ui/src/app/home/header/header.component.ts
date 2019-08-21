@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {MatToolbar} from "@angular/material";
+import {RestService} from "../../rest.service";
 
 @Component({
   selector: 'app-header',
@@ -12,12 +13,18 @@ export class HeaderComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
 
-  constructor() { }
+  constructor(private rest: RestService) {
+  }
 
   ngOnInit() {
   }
 
   toggleNavigation() {
     this.sidenavToggle.emit();
+  }
+
+
+  logout($event: MouseEvent) {
+    this.rest.logout();
   }
 }
