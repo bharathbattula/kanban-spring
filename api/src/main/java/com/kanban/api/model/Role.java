@@ -1,10 +1,20 @@
 package com.kanban.api.model;
 
+import lombok.Data;
 import org.hibernate.annotations.NaturalId;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "roles")
+@Data
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +25,7 @@ public class Role {
 	@Column(length = 60)
 	private RoleName name;
 
-	public Role() {
+	/*public Role() {
 
 	}
 
@@ -37,5 +47,5 @@ public class Role {
 
 	public void setName(RoleName name) {
 		this.name = name;
-	}
+	}*/
 }

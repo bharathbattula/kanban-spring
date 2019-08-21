@@ -1,7 +1,12 @@
 package com.kanban.api.request;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotBlank;
 
+@Data
+@NoArgsConstructor
 public class LoginDto {
 
 	@NotBlank
@@ -10,23 +15,4 @@ public class LoginDto {
 	@NotBlank
 	private String password;
 
-	public LoginDto() {
-
-	}
-
-	public String getUsernameOrEmail() {
-		return this.usernameOrEmail;
-	}
-
-	public void setUsernameOrEmail(final String usernameOrEmail) {
-		this.usernameOrEmail = usernameOrEmail;
-	}
-
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(final String password) {
-		this.password = password;
-	}
 }

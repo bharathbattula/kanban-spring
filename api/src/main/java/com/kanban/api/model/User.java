@@ -1,5 +1,7 @@
 package com.kanban.api.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Entity;
@@ -27,6 +29,8 @@ import java.util.Set;
 				"email"
 		})
 })
+@Data
+@NoArgsConstructor
 public class User extends DateAudit {
 	private static final long serialVersionUID = -5322778564353566486L;
 	@Id
@@ -57,6 +61,14 @@ public class User extends DateAudit {
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
+	public User(final String name, final String username, final String email, final String password) {
+		this.name = name;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+
+/*
 	public User() {
 
 	}
@@ -115,4 +127,5 @@ public class User extends DateAudit {
 	public void setRoles(final Set<Role> roles) {
 		this.roles = roles;
 	}
+*/
 }
