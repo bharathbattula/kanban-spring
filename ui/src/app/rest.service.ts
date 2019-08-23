@@ -7,7 +7,7 @@ import {UserSession} from "./model/UserSession";
 })
 export class RestService {
 
-  private host = "http://localhost:8080";
+  private host = "http://localhost:8080/api";
 
   private TOKEN = "bearer";
   private CURRENT_USER = "_current-user";
@@ -23,7 +23,7 @@ export class RestService {
           .then(response => response);
 
       case "GET":
-        return this.http.get(this.host + "/" + endpoint, {withCredentials: true})
+        return this.http.get(this.host + "/" + endpoint, {})
           .toPromise()
           .then(response => response);
     }
@@ -31,18 +31,23 @@ export class RestService {
 
   setSession(session: UserSession) {
     localStorage.setItem(this.CURRENT_USER, JSON.stringify(session));
+    console.log(JSON.stringify(session));
   }
 
   getToken(): string {
-    const session = JSON.parse(localStorage.getItem(this.CURRENT_USER));
-
+    const session = this.getSession();
+    console.log(session);
     if (session)
-      return session[this.TOKEN];
+      return session.token;
 
     return null;
   }
 
   logout() {
     localStorage.removeItem(this.CURRENT_USER);
+  }
+
+  getSession() {
+    return JSON.parse(localStorage.getItem(this.CURRENT_USER));
   }
 }

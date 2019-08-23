@@ -1,7 +1,6 @@
 package com.kanban.api.service;
 
 import com.kanban.api.model.Project;
-import com.kanban.api.model.UserSession;
 import com.kanban.api.repository.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +31,7 @@ public class ProjectService {
 		return savedProject;
 	}
 
-	public List getAllProjects(final UserSession userSession) {
-		return this.projectRepository.findAll();
+	public List getAllProjects(final Long id) {
+		return this.projectRepository.findAllById(id);
 	}
 }

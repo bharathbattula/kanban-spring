@@ -1,7 +1,7 @@
 package com.kanban.api.controller;
 
+import com.kanban.api.config.authentication.UserPrincipal;
 import com.kanban.api.model.Project;
-import com.kanban.api.model.UserSession;
 import com.kanban.api.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,12 +49,18 @@ public class ProjectController {
 		}
 	}
 
-	@Secured({"ROLE_ADMIN"})
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping
-	public ResponseEntity getProjects(@RequestBody final UserSession userSession) {
+	public ResponseEntity getProjects(final Authentication authentication) {
 		try {
 
-			return ResponseEntity.ok(this.projectService.getAllProjects(userSession));
+			final Object details = authentication.getPrincipal();
+
+			if (details instanceof UserPrincipal)
+				return ResponseEntity.ok(this.projectService.getAllProjects(((UserPrincipal) details).getId()));
+
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(Collections.singletonMap("error", "Something went wrong"));
 		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(Collections.singletonMap("error", "Failed to get the project details"));

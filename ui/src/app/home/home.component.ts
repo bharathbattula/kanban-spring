@@ -4,6 +4,8 @@ import {HeaderComponent} from "./header/header.component";
 import {MediaObserver} from "@angular/flex-layout";
 import {MediaMatcher} from "@angular/cdk/layout";
 import {RestService} from "../rest.service";
+import {Project} from "../model/Project";
+import {UserSession} from "../model/UserSession";
 
 @Component({
   selector: 'app-home',
@@ -20,6 +22,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   mediaQuery: MediaQueryList;
 
+  projects: Project[];
+
   private _mediaQueryListner: () => void;
 
   constructor(public media: MediaObserver,
@@ -30,16 +34,30 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._mediaQueryListner = () => changeDectorRef.detectChanges();
     this.mediaQuery.addListener(this._mediaQueryListner);
 
+    this.loadProjects();
   }
 
   ngOnInit() {
     this.rest.request(null, "hello", "GET")
       .then(response => console.log(`response :: ${response.success}`))
-      .catch(error => console.log(`error :: ${error}`))
+      .catch(error => console.log(`error :: ${error}`));
+
   }
 
   ngOnDestroy(): void {
     this.mediaQuery.removeListener(this._mediaQueryListner);
   }
 
+  loadProjects() {
+
+    const userSession = this.rest.getSession();
+
+    const requestBody = new UserSession(userSession.name, userSession.username, userSession.emailId, userSession.token);
+    this.rest.request(requestBody, 'project', "GET")
+      .then(projects => {
+        this.projects = projects
+        console.log(this.projects);
+      })
+      .catch(error => console.log(error));
+  }
 }

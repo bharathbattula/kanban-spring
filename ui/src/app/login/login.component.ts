@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     if(formValue) {
       console.log(formValue);
       const loginRequestObj = new Login(formValue.username, formValue.password);
-      this.rest.request(loginRequestObj, 'api/auth/signin', 'POST')
+      this.rest.request(loginRequestObj, 'auth/signin', 'POST')
         .then(response => {
           this.rest.setSession(response);
           this.router.navigateByUrl('app');

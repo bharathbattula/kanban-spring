@@ -32,21 +32,9 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain) throws ServletException, IOException {
 		try {
 
-			String origin = "*";
-
-			try {
-				origin = request.getHeader("origin");
-			} catch (final Exception e) {
-			}
-
-			response.setHeader("Access-Control-Allow-Origin", origin);
-			response.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
-			response.setHeader("Access-Control-Allow-Headers", "*");
-//			response.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, X-Requested-With, Content-Type, Cookie, Origin, Authorization");
-			response.setHeader("Access-Control-Allow-Credentials", "true");
-			response.setHeader("Access-Control-Max-Age", "180");
-
 			final String token = this.getTokenFromRequest(request);
+
+			LOGGER.info("Token ==> {}", token);
 
 			if (StringUtils.hasText(token) && this.tokenProvider.validateToken(token)) {
 
