@@ -15,7 +15,8 @@ import {SidenavComponent} from './home/sidenav/sidenav.component';
 import {AppRequestInterceptor} from "./app.request.interceptor";
 import {CookieService} from "ngx-cookie-service";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import { BoardComponent } from './board/board.component';
+import {BoardComponent} from './board/board.component';
+import {AddProjectComponent} from './home/add-project/add-project.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { BoardComponent } from './board/board.component';
     HomeComponent,
     HeaderComponent,
     SidenavComponent,
-    BoardComponent
+    BoardComponent,
+    AddProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +45,9 @@ import { BoardComponent } from './board/board.component';
       multi: true
     },
     CookieService
+  ],
+  entryComponents: [
+    AddProjectComponent
   ],
   bootstrap: [AppComponent]
 })

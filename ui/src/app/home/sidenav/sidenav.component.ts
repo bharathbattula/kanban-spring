@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Project} from "../../model/Project";
+import {MatDialog} from "@angular/material";
+import {AddProjectComponent} from "../add-project/add-project.component";
 
 const PROJECTS:Project[] = [
   {id:1 , name:"Signage"},
@@ -18,9 +20,20 @@ export class SidenavComponent implements OnInit {
 
   projects = PROJECTS;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) {
+  }
 
   ngOnInit() {
   }
+
+  addProjectDialog(): void {
+    this.dialog.open(AddProjectComponent, {
+      width: '450px'
+    });
+    this.dialog.afterAllClosed.subscribe(result => {
+      console.log(`dialog closed ${result}`);
+    });
+  }
+
 
 }

@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {
   MatButtonModule,
   MatCardModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatListModule,
@@ -25,7 +26,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   exports : [
     MatButtonModule,
@@ -37,7 +39,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ]
 })
 export class MaterialModule { }

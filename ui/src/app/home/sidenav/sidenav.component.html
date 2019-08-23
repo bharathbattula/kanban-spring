@@ -1,9 +1,9 @@
 <mat-nav-list>
-  <mat-list-item disableRipple [ngClass]="{'bigScreen' : changeWidth, 'no-hover' : true }">
-    <button mat-raised-button color="accent" style="width: 100%">
+  <mat-list-item disableRipple [ngClass]="{'bigScreen' : true, 'no-hover' : true }">
+    <button mat-raised-button color="accent" style="width: 100%" (click)="addProjectDialog()">
       <mat-icon>add</mat-icon> <span>Add Project</span>
     </button>
-    <mat-divider mat-inset></mat-divider>
+
   </mat-list-item>
   <mat-list-item *ngFor="let project of projects">
     {{project.name}}
