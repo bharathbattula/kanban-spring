@@ -1,7 +1,10 @@
 package com.kanban.api.service;
 
+import com.kanban.api.config.authentication.UserPrincipal;
 import com.kanban.api.model.Project;
+import com.kanban.api.model.User;
 import com.kanban.api.repository.ProjectRepository;
+import com.kanban.api.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository projectRepository;
 
+	@Autowired
+	private UserRepository userRepository;
+
 	public boolean duplicateProjectName(final String projectName) {
 
 		final Optional<Project> project = this.projectRepository.findByName(projectName);
@@ -25,13 +31,16 @@ public class ProjectService {
 		return project.isPresent();
 	}
 
-	public Project createProject(final Project project) {
-		final Project savedProject = this.projectRepository.save(project);
+	public Project createProject(final Project project, final UserPrincipal userPrincipal) {
 
-		return savedProject;
+		final User user = this.userRepository.findById(userPrincipal.getId()).get();
+
+		project.setUser(user);
+
+		return this.projectRepository.save(project);
 	}
 
-	public List getAllProjects(final Long id) {
-		return this.projectRepository.findAllById(id);
+	public List getAllProjects(final Long userId) {
+		return this.projectRepository.findAllByUserId(userId);
 	}
 }

@@ -1,5 +1,6 @@
 package com.kanban.api.controller;
 
+import com.kanban.api.common.Utility;
 import com.kanban.api.config.authentication.UserPrincipal;
 import com.kanban.api.model.Project;
 import com.kanban.api.service.ProjectService;
@@ -31,7 +32,7 @@ public class ProjectController {
 
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@PostMapping
-	public ResponseEntity create(@RequestBody final Project project) {
+	public ResponseEntity create(@RequestBody final Project project, final Authentication authentication) {
 
 		try {
 			if (this.projectService.duplicateProjectName(project.getName())) {
@@ -40,12 +41,14 @@ public class ProjectController {
 						.body(Collections.singletonMap("error", "Project already exist with the same name"));
 			}
 
-			return ResponseEntity.ok(this.projectService.createProject(project));
+			final UserPrincipal userPrincipal = Utility.getUserPrincipalFromAuthentication(authentication);
+
+			return ResponseEntity.ok(this.projectService.createProject(project, userPrincipal));
 
 		} catch (final Exception e) {
 			return ResponseEntity
 					.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(Collections.singletonMap("error", "Failed to create the project"));
+					.body(Collections.singletonMap("error", e.getMessage()));
 		}
 	}
 

@@ -1,13 +1,17 @@
 package com.kanban.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,6 +20,7 @@ import javax.validation.constraints.Size;
 @Table(name = "project")
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties("user")
 public class Project extends DateAudit {
 
 	private static final long serialVersionUID = -5316677316429747386L;
@@ -23,6 +28,10 @@ public class Project extends DateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@JoinColumn(name = "userId", nullable = false, updatable = false)
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+	private User user;
 
 	@NotBlank
 	@Size(min = 5, max = 10)
