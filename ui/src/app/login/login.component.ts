@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   login(formValue) {
     if(formValue) {
-      console.log(formValue);
+      
       const loginRequestObj = new Login(formValue.username, formValue.password);
       this.rest.request(loginRequestObj, 'auth/signin', 'POST')
         .then(response => {

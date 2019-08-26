@@ -8,8 +8,7 @@ import {UserSession} from "./model/UserSession";
 export class RestService {
 
   private host = "http://localhost:8080/api";
-
-  private TOKEN = "bearer";
+  
   private CURRENT_USER = "_current-user";
 
   constructor(private http:HttpClient) { }
@@ -31,12 +30,11 @@ export class RestService {
 
   setSession(session: UserSession) {
     localStorage.setItem(this.CURRENT_USER, JSON.stringify(session));
-    console.log(JSON.stringify(session));
+
   }
 
   getToken(): string {
     const session = this.getSession();
-    console.log(session);
     if (session)
       return session.token;
 

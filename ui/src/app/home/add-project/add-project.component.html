@@ -17,7 +17,10 @@
     </form>
   </div>
   <div mat-dialog-actions>
+    <span fxFlex></span>
     <button mat-stroked-button [mat-dialog-close]>Cancel</button>
-    <button mat-raised-button color="primary" [disabled]="savingProject" (click)="saveProject()">Save</button>
+    <button mat-raised-button color="primary" [disabled]="savingProject || !projectFrom.valid"
+            (click)="saveProject(projectFrom.value)">Save
+    </button>
   </div>
 </div>

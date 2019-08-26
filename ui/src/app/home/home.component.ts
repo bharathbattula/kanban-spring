@@ -4,8 +4,9 @@ import {HeaderComponent} from "./header/header.component";
 import {MediaObserver} from "@angular/flex-layout";
 import {MediaMatcher} from "@angular/cdk/layout";
 import {RestService} from "../rest.service";
-import {Project} from "../model/Project";
 import {UserSession} from "../model/UserSession";
+import {Router} from "@angular/router";
+import {DataService} from "../data.service";
 
 @Component({
   selector: 'app-home',
@@ -22,14 +23,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   mediaQuery: MediaQueryList;
 
-  projects: Project[];
-
   private _mediaQueryListner: () => void;
 
   constructor(public media: MediaObserver,
               changeDectorRef: ChangeDetectorRef,
               mediaMatcher: MediaMatcher,
-              private rest: RestService) {
+              private rest: RestService,
+              private router: Router,
+              private dataService: DataService) {
     this.mediaQuery = mediaMatcher.matchMedia('(max-width: 600px)');
     this._mediaQueryListner = () => changeDectorRef.detectChanges();
     this.mediaQuery.addListener(this._mediaQueryListner);
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.rest.request(null, "hello", "GET")
+    this.rest.request(null, 'hello', 'GET')
       .then(response => console.log(`response :: ${response.success}`))
       .catch(error => console.log(`error :: ${error}`));
 
@@ -53,11 +54,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     const userSession = this.rest.getSession();
 
     const requestBody = new UserSession(userSession.name, userSession.username, userSession.emailId, userSession.token);
-    this.rest.request(requestBody, 'project', "GET")
+    this.rest.request(requestBody, 'project', 'GET')
       .then(projects => {
-        this.projects = projects
-        console.log(this.projects);
+        //adding data to BehaviourSubject, subscriber get's the data in sidenav.component.ts
+        this.dataService.projectDataSource.next(projects);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        if (error.status === 401) {
+          this.router.navigateByUrl('/login');
+        }
+      });
   }
 }
