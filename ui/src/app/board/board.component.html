@@ -1,19 +1,28 @@
-<div class="board-container">
-  <div>
-    <mat-card>
-      <mat-card-title>
-        XYZ
-      </mat-card-title>
-        <mat-nav-list>
-          <mat-list-item style="border: 1px solid grey">
-            Create new project
-          </mat-list-item>
-        </mat-nav-list>
-      <mat-divider inset></mat-divider>
-      <mat-card-footer>
-        <button mat-flat-button style="width: 100%"> <mat-icon>add</mat-icon> <span>Add new card</span></button>
-      </mat-card-footer>
+<div *ngFor="let l of list" class="task-list-container">
+  <div class="add-card-button">
+    <button mat-icon-button color="accent" aria-label="Add new card">
+      <mat-icon>add_circle_outline</mat-icon>
+      <span style="color: white; margin-left: 10px">New card</span>
+    </button>
+  </div>
+  <div class="task-card-container">
+    <mat-card *ngFor="let task of l">
+      <mat-card-title>{{task.title}}</mat-card-title>
+      <mat-card-content>
+        <div class="task-card-description" ngClass="">
+          <p>{{task.description}}</p>
+          <p>Read more...</p>
+        </div>
+        <div class="task-card-author">
+          <mat-icon svgIcon="author-avatar"></mat-icon>
+          <span class="mat-icon-username">{{task.user.fullName}}</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions *ngIf="task.tags.length > 0">
+        <mat-chip-list>
+          <mat-chip *ngFor="let tag of task.tags" [disableRipple]="true">{{tag}}</mat-chip>
+        </mat-chip-list>
+      </mat-card-actions>
     </mat-card>
-    <button mat-stroked-button color="primary"> <mat-icon>add</mat-icon> <span>Add new list</span></button>
   </div>
 </div>

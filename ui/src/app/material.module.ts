@@ -12,6 +12,7 @@ import {
   MatToolbarModule
 } from "@angular/material";
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatIconModule,
     MatListModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatChipsModule
   ],
   exports : [
     MatButtonModule,
@@ -40,7 +42,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatIconModule,
     MatListModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatChipsModule
   ]
 })
 export class MaterialModule { }

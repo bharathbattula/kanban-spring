@@ -1,11 +1,61 @@
-.board-container {
-    padding: 10px;
+.task-list-container {
+  display: inline-block;
 }
 
-.mat-card {
+.add-card-button {
+  height: 15px;
+  padding: 5px;
+}
+
+.task-card-container {
+  margin-top: 22px;
+  display: inline-block;
+}
+
+mat-card {
   width: 200px;
+  height: auto;
+  font-size: 0.2em;
+  padding: 5px;
+  margin: 5px;
 }
 
 mat-card-title {
   font-size: 15px;
+  margin: 0px;
 }
+
+mat-card-content {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.task-card-description {
+  height: 70px;
+  overflow: hidden;
+}
+
+mat-card mat-card-actions {
+  padding: 0 5px;
+  margin: 1px;
+}
+
+mat-chip-list {
+  mat-chip {
+    font-size: 9px;
+    margin: 2px;
+  }
+}
+
+
+.task-card-author {
+  margin-top: 5px;
+  padding: 5px 0px;
+}
+
+.mat-icon-username {
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 2px;
+}
+
