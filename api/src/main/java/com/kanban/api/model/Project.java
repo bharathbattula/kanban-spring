@@ -30,7 +30,7 @@ public class Project extends DateAudit {
 	private Long id;
 
 	@JoinColumn(name = "userId", nullable = false, updatable = false)
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	private User user;
 
 	@NotBlank

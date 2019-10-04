@@ -11,8 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,4 +72,35 @@ public class ProjectController {
 					.body(Collections.singletonMap("error", "Failed to get the project details"));
 		}
 	}
+
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	@PutMapping
+	public ResponseEntity updateProject(@RequestBody final Project project, final Authentication authentication) {
+
+		try {
+
+			return ResponseEntity
+					.ok(this.projectService.updateProject(project, (UserPrincipal) authentication.getPrincipal()));
+
+		} catch (final Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Collections.singletonMap("error", e.getMessage()));
+		}
+	}
+
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	@DeleteMapping({"/{projectId}"})
+	public ResponseEntity deleteProject(@PathVariable("projectId") final Long projectId) {
+		try {
+
+			this.projectService.deleteProject(projectId);
+
+			return ResponseEntity.ok(Collections.singletonMap("success", "deleted"));
+
+		} catch (final Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Collections.singletonMap("error", e.getMessage()));
+		}
+	}
+
 }

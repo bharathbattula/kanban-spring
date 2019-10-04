@@ -43,4 +43,19 @@ public class ProjectService {
 	public List getAllProjects(final Long userId) {
 		return this.projectRepository.findAllByUserId(userId);
 	}
+
+	public void deleteProject(final Long projectId) {
+
+		this.projectRepository.deleteById(projectId);
+
+	}
+
+	public Project updateProject(final Project project, final UserPrincipal userPrincipal) {
+
+		final User user = this.userRepository.findById(userPrincipal.getId()).get();
+
+		project.setUser(user);
+
+		return this.projectRepository.save(project);
+	}
 }
