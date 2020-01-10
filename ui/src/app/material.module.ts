@@ -13,6 +13,8 @@ import {
 } from "@angular/material";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import {MatChipsModule} from "@angular/material/chips";
     MatListModule,
     MatMenuModule,
     MatDialogModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports : [
     MatButtonModule,
@@ -43,7 +47,9 @@ import {MatChipsModule} from "@angular/material/chips";
     MatListModule,
     MatMenuModule,
     MatDialogModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class MaterialModule { }

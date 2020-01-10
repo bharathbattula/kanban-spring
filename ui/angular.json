@@ -30,8 +30,7 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
-              "./node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-              "src/theme.scss"
+              "./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"
             ],
             "scripts": []
           },

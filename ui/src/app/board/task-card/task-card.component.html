@@ -1,0 +1,41 @@
+<mat-card>
+  <div class="card-title">
+    <p class="task-number">
+      {{'#' + task.id}}
+    </p>
+    <h4 class="task-name">
+      {{task.title}}
+    </h4>
+  </div>
+  <div class="inner-container">
+    <div class="deadline">
+      <mat-icon>access_time</mat-icon>
+      <span class="deadline">{{task.deadline | date:"dd MMM"}}</span>
+    </div>
+    <div style="width:50%;">
+      <ul class="avatars">
+        <li class="avatars__item">
+          <img
+            src="https://cdn.glitch.com/c10f12bb-fff7-4b57-b3d7-db54cfd60226%2Fimg_avatar.png?v=1576924695397"
+            class="avatars__img"
+          />
+        </li>
+        <li class="avatars__item">
+          <span class="avatars__initials">BB</span>
+        </li>
+        <li class="avatars__item">
+          <span class="avatars__initials">KD</span>
+        </li>
+        <li class="avatars__item">
+          <span class="avatars__initials">BS</span>
+        </li>
+        <li class="avatars__item">
+          <span class="avatars__others">+2</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div>
+    <span class="detail-view-button">View More...</span>
+  </div>
+</mat-card>

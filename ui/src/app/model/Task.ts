@@ -1,11 +1,12 @@
 import {User} from "./User";
 
-export class Task {
+export interface Task {
 
-  constructor(public id: number,
-              public title: string,
-              public description: string,
-              public user: User,
-              public tags: string[]) {
-  }
+  id: number;
+  title: string;
+  description: string;
+  user: User;
+  deadline: Date;
+  participants: string[];
+
 }

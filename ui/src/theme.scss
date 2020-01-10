@@ -8,7 +8,7 @@ $app-accent: mat-palette($mat-amber);
 $app-secondary: mat-palette($mat-deep-orange);
 
 
-$app-theme: mat-dark-theme($app-primary, $app-accent, $app-secondary);
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-secondary);
 
 
 @include angular-material-theme($app-theme);

@@ -17,6 +17,9 @@ import {CookieService} from "ngx-cookie-service";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {BoardComponent} from './board/board.component';
 import {AddProjectComponent} from './home/add-project/add-project.component';
+import {TaskCardComponent} from './board/task-card/task-card.component';
+import {ListComponent} from './board/list/list.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import {AddProjectComponent} from './home/add-project/add-project.component';
     HeaderComponent,
     SidenavComponent,
     BoardComponent,
-    AddProjectComponent
+    AddProjectComponent,
+    TaskCardComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
@@ -36,15 +41,17 @@ import {AddProjectComponent} from './home/add-project/add-project.component';
     MatInputModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatAutocompleteModule
+
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppRequestInterceptor,
-      multi: true
+      multi: true,
     },
-    CookieService
+    CookieService,
   ],
   entryComponents: [
     AddProjectComponent

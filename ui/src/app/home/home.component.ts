@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._mediaQueryListner = () => changeDectorRef.detectChanges();
     this.mediaQuery.addListener(this._mediaQueryListner);
 
-    this.loadProjects();
+    // this.loadProjects();
   }
 
   ngOnInit() {
