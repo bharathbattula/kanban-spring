@@ -1,11 +1,13 @@
 <div class="list-container">
 
   <div class="add-task">
-    <h4 class="task-name">{{list.name}}</h4>
-    <button mat-icon-button aria-label="Add new task" color="accent" (click)="revealCard()">
+    <button mat-icon-button aria-label="Add new task" color="accent"
+            (click)="currentState = currentState === 'hidden' ? 'show' : 'hidden'">
       <mat-icon>add_circle_outline</mat-icon>
       <span>New task</span>
     </button>
+
+    <h4 class="task-name">{{list.name}}</h4>
   </div>
   <mat-card [@reveal]="currentState" class="form-card">
     <div class="add-task-form">

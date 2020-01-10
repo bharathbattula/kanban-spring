@@ -54,10 +54,6 @@ export class ListComponent implements OnInit {
     })
   }
 
-  revealCard() {
-    this.currentState = this.currentState === 'hidden' ? 'show' : 'hidden';
-  }
-
   removeParticipant(user: string) {
     _.remove(this.taskParticipants, u => u === user);
     this.users.push(user);
