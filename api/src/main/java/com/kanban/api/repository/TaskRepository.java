@@ -10,4 +10,7 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
 	List<Task> findAllByBoardListId(Long boardListId);
+
+	long deleteByIdAndBoardListId(Long taskId, Long boardListId);
+
 }

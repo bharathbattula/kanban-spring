@@ -1,6 +1,11 @@
 package com.kanban.api.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
@@ -29,6 +34,10 @@ import java.util.Set;
 				"email"
 		})
 })
+@JsonIgnoreProperties(
+		value = {"password", "roles"}
+)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @NoArgsConstructor
 public class User extends DateAudit {

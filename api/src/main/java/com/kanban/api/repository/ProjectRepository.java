@@ -12,7 +12,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
 	Optional<Project> findByName(String name);
 
-	List<Project> findAllById(Long id);
+	Optional<Project> findById(Long id);
 
 	List<Project> findAllByUserId(Long userId);
 }

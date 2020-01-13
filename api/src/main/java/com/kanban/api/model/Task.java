@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,9 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Tasks", uniqueConstraints = {
@@ -24,7 +29,10 @@ import javax.validation.constraints.Size;
 })
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties("boardList")
+@JsonIgnoreProperties(
+		value = "boardList",
+		allowGetters = true
+)
 public class Task extends DateAudit{
 
 	private static final long serialVersionUID = 6810522483702548379L;
@@ -40,6 +48,9 @@ public class Task extends DateAudit{
 	@NotBlank
 	@Size(max = 70)
 	private String description;
+
+	@Column
+	private LocalDate deadLine;
 
 	@JoinColumn(name = "listId", nullable = false, updatable = true)
 	@ManyToOne(targetEntity = BoardList.class, fetch = FetchType.LAZY)
