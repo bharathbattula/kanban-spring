@@ -1,12 +1,11 @@
 import {User} from "./User";
-import {List} from "./List";
 
 export const users: User[] = [
   {id: 0, email: 'aba@gmail.com', firstName: 'bharat', lastName: 'battula', username: 'bb'},
   {id: 1, email: 'abc@gmail.com', firstName: 'abc', lastName: 'yz', username: 'jj'}
-]
+];
 
-export const myTasks1: List = {
+/*export const myTasks1: List = {
   name: 'Planning',
   tasks: [{
     id: 1,
@@ -62,4 +61,5 @@ export const myTasks2: List = {
       deadline: new Date(), participants: ["Auth", "Dev"]
     },
   ]
-};
+};*/
+

@@ -1,6 +1,9 @@
 import {Task} from "./Task";
+import {Project} from "./Project";
 
 export interface List {
-    name:string;
-    tasks:Task[];
+  id: number;
+  name: string;
+  project?: Project;
+  tasks: Task[];
 }

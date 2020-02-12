@@ -4,7 +4,6 @@ import {HeaderComponent} from "./header/header.component";
 import {MediaObserver} from "@angular/flex-layout";
 import {MediaMatcher} from "@angular/cdk/layout";
 import {RestService} from "../rest.service";
-import {UserSession} from "../model/UserSession";
 import {Router} from "@angular/router";
 import {DataService} from "../data.service";
 
@@ -47,22 +46,5 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.mediaQuery.removeListener(this._mediaQueryListner);
-  }
-
-  loadProjects() {
-
-    const userSession = this.rest.getSession();
-
-    const requestBody = new UserSession(userSession.name, userSession.username, userSession.emailId, userSession.token);
-    this.rest.request(requestBody, 'project', 'GET')
-      .then(projects => {
-        //adding data to BehaviourSubject, subscriber get's the data in sidenav.component.ts
-        this.dataService.projectDataSource.next(projects);
-      })
-      .catch(error => {
-        if (error.status === 401) {
-          this.router.navigateByUrl('/login');
-        }
-      });
   }
 }

@@ -1,3 +1,33 @@
 <div class="board-container">
-  <app-list *ngFor="let l of list" [list]="l"></app-list>
+  <app-list *ngFor="let l of list" [list]="l" [project]="project"></app-list>
+  <div class="add-list-button">
+    <button mat-flat-button color="accent">
+      <mat-icon>add</mat-icon>
+      <span>Add List</span>
+    </button>
+  </div>
 </div>
+
+<div class="bottom-fab">
+  <button mat-fab color="accent" matTooltip="Add new list" matTooltipPosition="before">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+
+<mat-card class="add-list-form-container">
+  <mat-toolbar color="primary">
+    <span fxFlex>Options</span>
+    <button mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-card-content>
+    <div>
+      <mat-form-field>
+        <input matInput placeholder="List title">
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+</mat-card>
+

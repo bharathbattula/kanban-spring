@@ -9,12 +9,13 @@
 
     <h4 class="task-name">{{list.name}}</h4>
   </div>
-  <mat-card [@reveal]="currentState" class="form-card">
+  <mat-card [@reveal]="currentState" [class.mat-elevation-z8]="true" class="form-card">
     <div class="add-task-form">
       <form [formGroup]="taskForm" (ngSubmit)="addTask()">
         <h4 class="task-name">{{taskTitle.value}}</h4>
         <mat-form-field floatLabel="never" hideRequiredMarker>
-          <input matInput placeholder="Task Title" maxlength="50" minlength="8" formControlName="title" required #taskTitle>
+          <input matInput placeholder="Task Title" maxlength="50" minlength="8" formControlName="title" required
+                 #taskTitle>
         </mat-form-field>
         <mat-form-field hideRequiredMarker>
           <textarea matInput class="form-description" placeholder="Description" maxlength="150" minlength="8"
@@ -56,5 +57,5 @@
       </form>
     </div>
   </mat-card>
-  <app-task-card *ngFor="let task of list.tasks" [task]="task"></app-task-card>
+  <app-task-card *ngFor="let task of list.tasks" [task]="task" [listComponent]="this"></app-task-card>
 </div>

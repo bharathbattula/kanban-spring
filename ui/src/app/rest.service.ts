@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {UserSession} from "./model/UserSession";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,11 @@ import {UserSession} from "./model/UserSession";
 export class RestService {
 
   private host = "http://localhost:8080/api";
-  
+
   private CURRENT_USER = "_current-user";
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   request(requestBody:any, endpoint:string, requestMethod:string):Promise<any> {
 
@@ -19,7 +21,12 @@ export class RestService {
       case "POST":
         return this.http.post(this.host + "/" + endpoint, requestBody)
           .toPromise()
-          .then(response => response);
+          .then(response => response)
+          .catch(reason => {
+            if (reason.status === 401) {
+              this.router.navigateByUrl('/login');
+            }
+          });
 
       case "GET":
         return this.http.get(this.host + "/" + endpoint, {})

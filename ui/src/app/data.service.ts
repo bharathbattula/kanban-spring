@@ -11,5 +11,11 @@ export class DataService {
 
   public projectData$ = this.projectDataSource.asObservable();
 
-  constructor() { }
+  constructor() {
+  }
+
+  getProject(name: string) {
+    return this.projectDataSource.getValue().find(value => value.name === name);
+  }
+
 }

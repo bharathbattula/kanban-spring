@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Task} from "../../model/Task";
+import {ListComponent} from "../list/list.component";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-task-card',
@@ -9,11 +11,16 @@ import {Task} from "../../model/Task";
 export class TaskCardComponent implements OnInit {
 
   @Input()
-  task:Task;
+  task: Task;
 
-  constructor() { }
+  @Input()
+  listComponent: ListComponent;
+
+  constructor() {
+  }
 
   ngOnInit() {
+    this.task.deadLine = moment(this.task.deadLine).toDate();
   }
 
 }

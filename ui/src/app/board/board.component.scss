@@ -2,7 +2,21 @@
 .board-container {
   display: flex;
   flex-wrap: nowrap;
+  flex-direction: row;
   overflow-x: auto;
+  position: relative;
+
+  .add-list-button {
+    width: 222px;
+    height: 40px;
+    position: absolute;
+
+    button {
+      width: 100%;
+      margin: auto;
+    }
+  }
+
 }
 
 app-list {
@@ -70,3 +84,26 @@ mat-chip-list {
   margin-left: 2px;
 }
 
+.bottom-fab {
+  bottom: 25px; /* Ensure it's 5 px from the bottom */
+  right: 35px;
+  position: fixed; /* Sticks it in position when scrolling */
+}
+
+.add-list-form-container.mat-card {
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+  height: 150px;
+  width: 300px;
+  border: 2px solid #1E8FE1;
+
+  mat-toolbar {
+    height: 40px;
+    background: #607d8b;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+}

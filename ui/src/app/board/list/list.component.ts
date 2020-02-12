@@ -7,16 +7,18 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import * as moment from 'moment';
 import {List} from "../../model/List";
+import {RestService} from "../../rest.service";
+import {Project} from "../../model/Project";
 
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
-  animations:[
+  animations: [
     trigger('reveal', [
       state('hidden', style({
-        display:'none',
+        display: 'none',
       })),
       state('show', style({
         display: 'inline-flex',
@@ -31,18 +33,22 @@ export class ListComponent implements OnInit {
   @Input()
   list: List;
 
+  @Input()
+  project: Project;
+
   startDate = new Date();
 
-  currentState="hidden";
+  currentState = "hidden";
 
-  users:String[] = ['Bharat', 'Amit', 'Prashant', 'Rishi', 'DD'];
-  taskParticipants:string[] = [];
+  users: String[] = ['Bharat', 'Amit', 'Prashant', 'Rishi', 'DD'];
+  taskParticipants: string[] = [];
 
   separatorKeysCodes: number[] = [COMMA, ENTER];
 
-  taskForm:FormGroup;
+  taskForm: FormGroup;
 
-  constructor(private fb:FormBuilder) { }
+  constructor(private fb: FormBuilder, private rest: RestService) {
+  }
 
   ngOnInit() {
 
@@ -71,19 +77,28 @@ export class ListComponent implements OnInit {
   }
 
   addTask() {
-    console.log(this.taskForm.getRawValue());
 
     let formData = this.taskForm.getRawValue();
 
-    this.list.tasks.push({
-      id: _.maxBy(this.list, task => task.id).id + 1,
+    let newTask = {
       title: formData.title,
       description: formData.description,
-      user: null,
-      deadline: moment(formData.deadline).toDate(),
-      participants: null
-    });
+      deadLine: moment(formData.deadline).format('YYYY-MM-DD'),
+    }
+    console.log(newTask);
 
-    this.taskForm.reset();
+    this.rest.request(newTask, `project/${this.project.id}/list/${this.list.id}/task`, 'POST')
+      .then(task => {
+        console.log(task);
+        this.list.tasks.push(task);
+        console.log(this.list);
+        this.taskForm.reset();
+        this.currentState = "hidden"
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
   }
+
 }
