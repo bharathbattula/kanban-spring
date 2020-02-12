@@ -12,10 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -33,7 +31,7 @@ public class TaskService {
 
 	public List<Task> getTasks(final Long projectId, final Long listId) {
 
-		if(!projectRepository.existsById(projectId)) {
+		if(!this.projectRepository.existsById(projectId)) {
 			throw new ResourceNotFoundException("Project "+ projectId + "is not found");
 		}
 
@@ -46,16 +44,16 @@ public class TaskService {
 
 	}
 
-	public Task saveTask(Long projectId, Long boardListId, Task task) {
+	public Task saveTask(final Long projectId, final Long boardListId, final Task task) {
 
-		if(!projectRepository.existsById(projectId)) {
-			throw new ResourceNotFoundException("Project "+ projectId + "is not found");
+		if (!this.projectRepository.existsById(projectId)) {
+			throw new ResourceNotFoundException("Project " + projectId + "is not found");
 		}
 
 		final Optional<BoardList> boardList = this.boardListRepository.findById(boardListId);
 
-		if (boardList.isPresent()) {
-			new ResourceNotFoundException("Board List "+ boardListId + "is not found");
+		if (!boardList.isPresent()) {
+			new ResourceNotFoundException("Board List " + boardListId + "is not found");
 		}
 
 		task.setBoardList(boardList.get());
@@ -63,9 +61,9 @@ public class TaskService {
 		return this.taskRepository.save(task);
 	}
 
-	public void deleteTask(Long projectId, Long boardListId, Long taskId) {
+	public void deleteTask(final Long projectId, final Long boardListId, final Long taskId) {
 
-		if(!projectRepository.existsById(projectId)) {
+		if(!this.projectRepository.existsById(projectId)) {
 			throw new ResourceNotFoundException("Project "+ projectId + "is not found");
 		}
 

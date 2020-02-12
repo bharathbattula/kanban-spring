@@ -26,23 +26,25 @@ public class BoardListService {
 
 	public List<BoardList> getListFromProjectId(final Long projectId) {
 
-		if(!projectRepository.existsById(projectId)) {
-			throw new ResourceNotFoundException("Project "+ projectId + "is not found");
+		if (!this.projectRepository.existsById(projectId)) {
+			throw new ResourceNotFoundException("Project " + projectId + "is not found");
 		}
 
-		this.boardListRepository.findAllByProjectId(projectId)
-				.stream()
-				.forEach(boardList -> boardList.getTask());
+		final List<BoardList> boardLists = this.boardListRepository.findAllByProjectId(projectId);
 
-		return this.boardListRepository.findAllByProjectId(projectId);
+		boardLists.stream().forEach(boardList -> {
+			boardList.getProject();
+			boardList.getTasks();
+		});
+		return boardLists;
 	}
 
 	public BoardList saveBoardList(final Long projectId, final BoardList boardList) {
 
-		final Optional<Project> project = projectRepository.findById(projectId);
+		final Optional<Project> project = this.projectRepository.findById(projectId);
 
-		if(!project.isPresent()) {
-			throw new ResourceNotFoundException("Project "+ projectId + "is not found");
+		if (!project.isPresent()) {
+			throw new ResourceNotFoundException("Project " + projectId + "is not found");
 		}
 
 		boardList.setProject(project.get());
@@ -50,8 +52,8 @@ public class BoardListService {
 	}
 
 	public void deleteBoardList(final Long projectId, final Long boardListId) {
-		if(!projectRepository.existsById(projectId)) {
-			throw new ResourceNotFoundException("Project "+ projectId + "is not found");
+		if (!this.projectRepository.existsById(projectId)) {
+			throw new ResourceNotFoundException("Project " + projectId + "is not found");
 		}
 
 		this.boardListRepository.deleteById(boardListId);

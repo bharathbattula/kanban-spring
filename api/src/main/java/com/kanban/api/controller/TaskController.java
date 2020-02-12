@@ -24,7 +24,7 @@ import java.util.Collections;
 import static com.kanban.api.common.Constants.BASE_API;
 
 @RestController
-@RequestMapping(BASE_API + "project/{projectId}/list/{listId}/task")
+@RequestMapping(BASE_API + "/project/{projectId}/list/{listId}/task")
 public class TaskController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
@@ -34,12 +34,12 @@ public class TaskController {
 
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping
-	public ResponseEntity getAllTaskFromProjectId(@PathVariable final Long projectId, @PathVariable Long listId) {
+	public ResponseEntity getAllTaskFromProjectId(@PathVariable final Long projectId, @PathVariable final Long listId) {
 		try {
 
 			return ResponseEntity.ok(this.taskService.getTasks(projectId, listId));
 
-		} catch (ResourceNotFoundException e){
+		} catch (final ResourceNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(Collections.singletonMap("error", e.getMessage()));
 
@@ -52,16 +52,16 @@ public class TaskController {
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@PostMapping
 	@PutMapping
-	public ResponseEntity createTask(@PathVariable final Long projectId, @PathVariable Long listId, @RequestBody Task task) {
+	public ResponseEntity createTask(@PathVariable final Long projectId, @PathVariable final Long listId, @RequestBody final Task task) {
 		try {
 
 			return ResponseEntity.ok(this.taskService.saveTask(projectId, listId, task));
 
-		} catch (BadRequestException e) {
+		} catch (final BadRequestException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(Collections.singletonMap("error", e.getMessage()));
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(Collections.singletonMap("error", "Something went wrong"));
 
@@ -70,7 +70,7 @@ public class TaskController {
 
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@DeleteMapping("/{taskId}")
-	public ResponseEntity deleteTask(@PathVariable final Long projectId, @PathVariable Long listId, @PathVariable Long taskId) {
+	public ResponseEntity deleteTask(@PathVariable final Long projectId, @PathVariable final Long listId, @PathVariable final Long taskId) {
 
 		try {
 
@@ -78,7 +78,7 @@ public class TaskController {
 
 			return ResponseEntity.ok(Collections.singletonMap("success", "Task deleted successfully"));
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(Collections.singletonMap("error", "Something went wrong"));
 
