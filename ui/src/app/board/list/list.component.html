@@ -57,5 +57,10 @@
       </form>
     </div>
   </mat-card>
+
+  <div class="add-task" *ngIf="list.tasks.length == 0">
+    <p>No tasks yet</p>
+  </div>
+
   <app-task-card *ngFor="let task of list.tasks" [task]="task" [listComponent]="this"></app-task-card>
 </div>

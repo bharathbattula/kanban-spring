@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatSidenav} from "@angular/material";
-import {HeaderComponent} from "./header/header.component";
-import {MediaObserver} from "@angular/flex-layout";
-import {MediaMatcher} from "@angular/cdk/layout";
-import {RestService} from "../rest.service";
-import {Router} from "@angular/router";
-import {DataService} from "../data.service";
+import {MatSidenav} from '@angular/material';
+import {HeaderComponent} from './header/header.component';
+import {MediaObserver} from '@angular/flex-layout';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {RestService} from '../rest.service';
+import {Router} from '@angular/router';
+import {DataService} from '../data.service';
 
 @Component({
   selector: 'app-home',

@@ -1,5 +1,6 @@
 
 .board-container {
+  min-height: 90%;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
@@ -7,12 +8,10 @@
   position: relative;
 
   .add-list-button {
-    width: 222px;
-    height: 40px;
-    position: absolute;
+    padding: 5px;
 
-    button {
-      width: 100%;
+    > button {
+      width: 222px;
       margin: auto;
     }
   }
@@ -105,5 +104,36 @@ mat-chip-list {
 
   mat-form-field {
     width: 100%;
+  }
+}
+
+.form-card {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #f443366b;
+  border-radius: 7px;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.add-list-form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  form {
+    display: flex;
+
+    mat-form-field {
+      width: 80%;
+      padding: 5px;
+      font-family: monospace, Roboto;
+    }
+
+    > button {
+      width: 25px;
+      font-family: monospace, Roboto;
+      margin: auto;
+    }
   }
 }

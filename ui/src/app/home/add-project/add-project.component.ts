@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialogRef} from "@angular/material";
-import {RestService} from "../../rest.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Project} from "../../model/Project";
-import {DataService} from "../../data.service";
+import {MatDialogRef} from '@angular/material';
+import {RestService} from '../../rest.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Project} from '../../model/Project';
+import {DataService} from '../../data.service';
 
 @Component({
   selector: 'app-add-project',

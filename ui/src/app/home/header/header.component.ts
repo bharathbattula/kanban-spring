@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {MatToolbar} from "@angular/material";
-import {RestService} from "../../rest.service";
-import {DataService} from "../../data.service";
-import {Router} from "@angular/router";
+import {MatToolbar} from '@angular/material';
+import {RestService} from '../../rest.service';
+import {DataService} from '../../data.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent implements OnInit {
 
-  @ViewChild("appToolbar", {static: true}) appToolbar: MatToolbar;
+  @ViewChild('appToolbar', {static: true}) appToolbar: MatToolbar;
 
   @Output() public sidenavToggle = new EventEmitter();
 

@@ -10,13 +10,13 @@ import {
   MatSidenavModule,
   MatTabsModule,
   MatToolbarModule
-} from "@angular/material";
-import {DragDropModule} from "@angular/cdk/drag-drop";
-import {MatChipsModule} from "@angular/material/chips";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
-import {MatTooltipModule} from "@angular/material/tooltip";
-
+} from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -35,7 +35,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatChipsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   exports : [
     MatButtonModule,
@@ -52,7 +53,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatChipsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MaterialModule { }

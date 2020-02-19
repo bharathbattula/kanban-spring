@@ -1,9 +1,9 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Project} from "../../model/Project";
-import {MatDialog} from "@angular/material";
-import {AddProjectComponent} from "../add-project/add-project.component";
-import {DataService} from "../../data.service";
-import {Subscription} from "rxjs";
+import {Project} from '../../model/Project';
+import {MatDialog} from '@angular/material';
+import {AddProjectComponent} from '../add-project/add-project.component';
+import {DataService} from '../../data.service';
+import {Subscription} from 'rxjs';
 
 import * as _ from 'lodash';
 
@@ -16,7 +16,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   @Input('bigScreen')
   changeWidth = true;
-  
+
   projects: Project[] = [];
 
   subscriber: Subscription;

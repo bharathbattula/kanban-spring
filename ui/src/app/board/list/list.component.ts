@@ -1,14 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import * as _ from 'lodash';
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
-import {MatChipInputEvent} from "@angular/material/chips";
-import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
-import {List} from "../../model/List";
-import {RestService} from "../../rest.service";
-import {Project} from "../../model/Project";
+import {List} from '../../model/List';
+import {RestService} from '../../rest.service';
+import {Project} from '../../model/Project';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class ListComponent implements OnInit {
 
   startDate = new Date();
 
-  currentState = "hidden";
+  currentState = 'hidden';
 
   users: String[] = ['Bharat', 'Amit', 'Prashant', 'Rishi', 'DD'];
   taskParticipants: string[] = [];
@@ -53,10 +53,10 @@ export class ListComponent implements OnInit {
   ngOnInit() {
 
     this.taskForm = this.fb.group({
-      title: new FormControl("", [Validators.min(8), Validators.max(50), Validators.required]),
-      description: new FormControl("", [Validators.min(8), Validators.max(150), Validators.required]),
-      deadline: new FormControl("", [Validators.required]),
-      participants: new FormControl("")
+      title: new FormControl('', [Validators.min(8), Validators.max(50), Validators.required]),
+      description: new FormControl('', [Validators.min(8), Validators.max(150), Validators.required]),
+      deadline: new FormControl('', [Validators.required]),
+      participants: new FormControl('')
     })
   }
 
@@ -93,7 +93,7 @@ export class ListComponent implements OnInit {
         this.list.tasks.push(task);
         console.log(this.list);
         this.taskForm.reset();
-        this.currentState = "hidden"
+        this.currentState = 'hidden'
       })
       .catch(error => {
         console.log(error);
