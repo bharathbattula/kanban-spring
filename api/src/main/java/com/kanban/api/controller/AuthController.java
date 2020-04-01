@@ -2,9 +2,6 @@ package com.kanban.api.controller;
 
 import com.kanban.api.config.authentication.JwtTokenProvider;
 import com.kanban.api.config.authentication.UserPrincipal;
-import com.kanban.api.exception.ApplicationException;
-import com.kanban.api.model.Role;
-import com.kanban.api.model.RoleName;
 import com.kanban.api.model.User;
 import com.kanban.api.model.UserSession;
 import com.kanban.api.repository.RoleRepository;
@@ -30,6 +27,8 @@ import javax.validation.Valid;
 import java.util.Collections;
 
 import static com.kanban.api.common.Constants.BASE_API;
+import static com.kanban.api.common.Constants.ERROR;
+import static com.kanban.api.common.Constants.SUCCESS;
 
 @RestController
 @RequestMapping(BASE_API + "/auth")
@@ -79,11 +78,11 @@ public class AuthController {
 	@PostMapping("signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody final SignUpDto signUpDto) {
 		if (this.userRepository.existsByUsername(signUpDto.getUsername())) {
-			return new ResponseEntity(Collections.singletonMap("error", "Username already exist"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(Collections.singletonMap(ERROR, "Username already exist"), HttpStatus.BAD_REQUEST);
 		}
 
 		if (this.userRepository.existsByEmail(signUpDto.getEmail())) {
-			return new ResponseEntity(Collections.singletonMap("error", "Email already exist"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(Collections.singletonMap(ERROR, "Email already exist"), HttpStatus.BAD_REQUEST);
 		}
 
 		final User user = new User(signUpDto.getName(), signUpDto.getUsername(),
@@ -92,14 +91,14 @@ public class AuthController {
 
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 
-		final Role role = this.roleRepository.findByName(RoleName.ROLE_USER)
-				.orElseThrow(() -> new ApplicationException("User role not set yet."));
-
-		user.setRoles(Collections.singleton(role));
+//		final Role role = this.roleRepository.findByName(RoleName.ROLE_USER)
+//				.orElseThrow(() -> new ApplicationException("User role not set yet."));
+//
+//		user.setRoles(Collections.singleton(role));
 
 		this.userRepository.save(user);
 
-		return ResponseEntity.ok().body(Collections.singletonMap("success", "User created successfully"));
+		return ResponseEntity.ok().body(Collections.singletonMap(SUCCESS, "User created successfully"));
 	}
 
 }

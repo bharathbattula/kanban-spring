@@ -36,11 +36,12 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
 			LOGGER.info("Token ==> {}", token);
 
+
 			if (StringUtils.hasText(token) && this.tokenProvider.validateToken(token)) {
 
 				final Long userId = this.tokenProvider.getUserIdFromToken(token);
 
-				final UserDetails userDetails = this.userDetailService.loadUserByUserId(userId);
+				final UserDetails userDetails = this.userDetailService.loadUserByUserId(userId, 9L);
 
 				final UsernamePasswordAuthenticationToken authenticationToken =
 						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

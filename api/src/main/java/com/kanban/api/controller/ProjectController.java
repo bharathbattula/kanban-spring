@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 
 import static com.kanban.api.common.Constants.BASE_API;
+import static com.kanban.api.common.Constants.ERROR;
 
 @RestController
 @RequestMapping(BASE_API + "/project")
@@ -33,7 +34,7 @@ public class ProjectController {
 	@Autowired
 	ProjectService projectService;
 
-	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	//@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@PostMapping
 	public ResponseEntity create(@RequestBody final Project project, final Authentication authentication) {
 
@@ -41,7 +42,7 @@ public class ProjectController {
 			if (this.projectService.duplicateProjectName(project.getName())) {
 				LOGGER.warn("Project already present with the same name, {}", project.getName());
 				return ResponseEntity.badRequest()
-						.body(Collections.singletonMap("error", "Project already exist with the same name"));
+						.body(Collections.singletonMap(ERROR, "Project already exist with the same name"));
 			}
 
 			final UserPrincipal userPrincipal = Utility.getUserPrincipalFromAuthentication(authentication);
@@ -51,7 +52,7 @@ public class ProjectController {
 		} catch (final Exception e) {
 			return ResponseEntity
 					.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(Collections.singletonMap("error", e.getMessage()));
+					.body(Collections.singletonMap(ERROR, e.getMessage()));
 		}
 	}
 
@@ -66,10 +67,10 @@ public class ProjectController {
 				return ResponseEntity.ok(this.projectService.getAllProjects(((UserPrincipal) details).getId()));
 
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(Collections.singletonMap("error", "Something went wrong"));
+					.body(Collections.singletonMap(ERROR, "Something went wrong"));
 		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(Collections.singletonMap("error", "Failed to get the project details"));
+					.body(Collections.singletonMap(ERROR, "Failed to get the project details"));
 		}
 	}
 
@@ -84,7 +85,7 @@ public class ProjectController {
 
 		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(Collections.singletonMap("error", e.getMessage()));
+					.body(Collections.singletonMap(ERROR, e.getMessage()));
 		}
 	}
 
@@ -99,7 +100,7 @@ public class ProjectController {
 
 		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(Collections.singletonMap("error", e.getMessage()));
+					.body(Collections.singletonMap(ERROR, e.getMessage()));
 		}
 	}
 

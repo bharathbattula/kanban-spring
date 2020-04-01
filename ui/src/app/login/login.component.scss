@@ -7,9 +7,14 @@
   justify-content: center;
 }
 
-.login-card {
+.login-registration-card {
   height: auto;
   width: 300px;
+  border-radius: 0;
+}
+
+mat-tab-group {
+  background: #a9a9a9;
 }
 
 .mat-display-1 {

@@ -20,19 +20,19 @@ public class CustomUserDetailService implements UserDetailsService {
 	@Transactional
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 
-		final User user  = this.userRepository.findByUsernameOrEmail(username, username)
+		final User user = this.userRepository.findByUsernameOrEmail(username, username)
 				.orElseThrow(() ->
-						new UsernameNotFoundException("User not found with the username "+username));
+						new UsernameNotFoundException("User not found with the username " + username));
 
-		return UserPrincipal.create(user);
+		return UserPrincipal.create(user, 9L);
 	}
 
-	public UserDetails loadUserByUserId(final Long id) {
+	public UserDetails loadUserByUserId(final Long id, final Long projectId) {
 
 		final User user = this.userRepository.findById(id)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found with the Id "));
 
-		return UserPrincipal.create(user);
+		return UserPrincipal.create(user, projectId);
 	}
 
 }

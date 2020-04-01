@@ -2,6 +2,7 @@ package com.kanban.api.config.authentication;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kanban.api.model.User;
+import com.kanban.api.service.ProjectService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,9 +37,16 @@ public class UserPrincipal implements UserDetails {
 	}
 
 	public static UserPrincipal create(final User user) {
-		final List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
-				.collect(Collectors.toList());
+		return create(user, null);
+	}
+
+	public static UserPrincipal create(final User user, final Long projectId) {
+
+		final List<GrantedAuthority> authorities = extractAuthorities(user, projectId);/*user.getProjects().stream()
+				.map(project -> {
+					new SimpleGrantedAuthority(role.getName().name())
+				})
+				.collect(Collectors.toList());*/
 
 		return new UserPrincipal(
 				user.getId(),
@@ -48,6 +56,17 @@ public class UserPrincipal implements UserDetails {
 				user.getPassword(),
 				authorities);
 
+	}
+
+	private static List<GrantedAuthority> extractAuthorities(final User user, final Long projectid) {
+
+		return ProjectService.projects.stream()
+				.filter(project -> projectid.equals(project.getId()))
+				.map(project -> {
+					return user.getUsername().equals(project.getUser().getUsername()) ?
+							new SimpleGrantedAuthority("ROLE_ADMIN") : new SimpleGrantedAuthority("ROLE_USER");
+				})
+				.collect(Collectors.toList());
 	}
 
 	public Long getId() {

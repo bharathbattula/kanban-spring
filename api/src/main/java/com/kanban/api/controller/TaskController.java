@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 
 import static com.kanban.api.common.Constants.BASE_API;
+import static com.kanban.api.common.Constants.ERROR;
+import static com.kanban.api.common.Constants.SUCCESS;
 
 @RestController
 @RequestMapping(BASE_API + "/project/{projectId}/list/{listId}/task")
@@ -41,11 +43,11 @@ public class TaskController {
 
 		} catch (final ResourceNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(Collections.singletonMap("error", e.getMessage()));
+					.body(Collections.singletonMap(ERROR, e.getMessage()));
 
 		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(Collections.singletonMap("error", "Something went wrong"));
+					.body(Collections.singletonMap(ERROR, "Something went wrong"));
 		}
 	}
 
@@ -59,11 +61,11 @@ public class TaskController {
 
 		} catch (final BadRequestException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(Collections.singletonMap("error", e.getMessage()));
+					.body(Collections.singletonMap(ERROR, e.getMessage()));
 
 		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(Collections.singletonMap("error", "Something went wrong"));
+					.body(Collections.singletonMap(ERROR, "Something went wrong"));
 
 		}
 	}
@@ -76,11 +78,11 @@ public class TaskController {
 
 			this.taskService.deleteTask(projectId, listId, taskId);
 
-			return ResponseEntity.ok(Collections.singletonMap("success", "Task deleted successfully"));
+			return ResponseEntity.ok(Collections.singletonMap(SUCCESS, "Task deleted successfully"));
 
 		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(Collections.singletonMap("error", "Something went wrong"));
+					.body(Collections.singletonMap(ERROR, "Something went wrong"));
 
 		}
 	}

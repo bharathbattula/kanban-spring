@@ -1,34 +1,81 @@
 <div class="login-container">
-  <mat-card class="login-card">
-    <mat-card-title>
-      <p class="mat-display-1">
-        LOGIN
-      </p>
-    </mat-card-title>
-    <mat-card-content>
-      <div class="form-container">
-        <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
-          <mat-form-field class="form-field">
-            <input matInput placeholder="Username" formControlName="username">
-            <mat-error *ngIf="!loginForm.get('username').valid">
-              Enter username
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field class="form-field">
-            <input matInput placeholder="Password" type="password" formControlName="password">
-            <mat-error *ngIf="!loginForm.get('password').valid">
-              Enter password
-            </mat-error>
-          </mat-form-field>
-          <div class="form-field">
-            <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
-              Submit
-            </button>
+
+  <mat-tab-group mat-stretch-tabs>
+    <mat-tab label="Login">
+      <mat-card class="login-registration-card">
+        <!--<mat-card-title>
+          <p class="mat-display-1">
+            LOGIN
+          </p>
+        </mat-card-title>-->
+        <mat-card-content>
+          <div class="form-container">
+            <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+              <mat-form-field class="form-field">
+                <input matInput placeholder="Username" formControlName="username">
+                <mat-error *ngIf="!loginForm.get('username').valid">
+                  Enter username
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="form-field">
+                <input matInput placeholder="Password" type="password" formControlName="password">
+                <mat-error *ngIf="!loginForm.get('password').valid">
+                  Enter password
+                </mat-error>
+              </mat-form-field>
+              <div class="form-field">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
+                  Login
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </mat-card-content>
-  </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Registration">
+      <mat-card class="login-registration-card">
+        <mat-card-content>
+          <div class="form-container">
+            <form [formGroup]="registrationForm" (ngSubmit)="register(registrationForm.value)">
+
+              <mat-form-field class="form-field">
+                <input matInput placeholder="Name" formControlName="name">
+                <mat-error *ngIf="!registrationForm.get('name').valid">
+                  Enter Name
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="form-field">
+                <input matInput placeholder="Username" formControlName="username">
+                <mat-error *ngIf="!registrationForm.get('username').valid">
+                  Enter username
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="form-field">
+                <input matInput placeholder="Email" formControlName="email">
+                <mat-error *ngIf="!registrationForm.get('email').valid">
+                  Enter email
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="form-field">
+                <input matInput placeholder="Password" type="password" formControlName="password">
+                <mat-error *ngIf="!registrationForm.get('password').valid">
+                  Enter password
+                </mat-error>
+              </mat-form-field>
+              <div class="form-field">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!registrationForm.valid">
+                  Register
+                </button>
+              </div>
+            </form>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+
+
 </div>
 
 

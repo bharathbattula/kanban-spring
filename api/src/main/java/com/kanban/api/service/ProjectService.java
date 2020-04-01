@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +20,19 @@ public class ProjectService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProjectService.class);
 
+
 	@Autowired
 	private ProjectRepository projectRepository;
 
 	@Autowired
 	private UserRepository userRepository;
+
+	public static final List<Project> projects = new ArrayList<>();
+
+	@PostConstruct
+	public void init() {
+		projects.addAll(this.projectRepository.findAll());
+	}
 
 	public boolean duplicateProjectName(final String projectName) {
 
