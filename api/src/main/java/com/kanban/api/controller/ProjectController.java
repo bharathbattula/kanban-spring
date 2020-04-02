@@ -56,7 +56,7 @@ public class ProjectController {
 		}
 	}
 
-	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+//	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping
 	public ResponseEntity getProjects(final Authentication authentication) {
 		try {

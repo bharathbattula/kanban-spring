@@ -42,7 +42,7 @@ public class UserPrincipal implements UserDetails {
 
 	public static UserPrincipal create(final User user, final Long projectId) {
 
-		final List<GrantedAuthority> authorities = extractAuthorities(user, projectId);/*user.getProjects().stream()
+		final List<GrantedAuthority> authorities = projectId != null ? extractAuthorities(user, projectId) : null;/*user.getProjects().stream()
 				.map(project -> {
 					new SimpleGrantedAuthority(role.getName().name())
 				})

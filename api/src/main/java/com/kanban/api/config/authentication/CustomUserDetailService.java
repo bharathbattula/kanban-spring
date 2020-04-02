@@ -24,7 +24,7 @@ public class CustomUserDetailService implements UserDetailsService {
 				.orElseThrow(() ->
 						new UsernameNotFoundException("User not found with the username " + username));
 
-		return UserPrincipal.create(user, 9L);
+		return UserPrincipal.create(user, null);
 	}
 
 	public UserDetails loadUserByUserId(final Long id, final Long projectId) {
