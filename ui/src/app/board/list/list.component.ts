@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import {List} from '../../model/List';
 import {RestService} from '../../rest.service';
 import {Project} from '../../model/Project';
+import {DataService} from "../../data.service";
 
 
 @Component({
@@ -33,7 +34,6 @@ export class ListComponent implements OnInit {
   @Input()
   list: List;
 
-  @Input()
   project: Project;
 
   startDate = new Date();
@@ -47,7 +47,8 @@ export class ListComponent implements OnInit {
 
   taskForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private rest: RestService) {
+  constructor(private fb: FormBuilder, private rest: RestService, private dataService: DataService) {
+    this.project = this.dataService.getCurrentProjectValue();
   }
 
   ngOnInit() {

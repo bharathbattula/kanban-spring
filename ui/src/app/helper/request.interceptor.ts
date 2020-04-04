@@ -2,12 +2,13 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/com
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
-import {RestService} from "./rest.service";
+import {RestService} from "../rest.service";
 
 @Injectable()
-export class AppRequestInterceptor implements HttpInterceptor {
+export class RequestInterceptor implements HttpInterceptor {
 
-  constructor(private cookieService: CookieService, private rest: RestService) {}
+  constructor(private cookieService: CookieService, private rest: RestService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

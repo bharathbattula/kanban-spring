@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {UserSession} from "./model/UserSession";
 import {Router} from "@angular/router";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,26 @@ export class RestService {
 
   private host = "http://localhost:8080/api";
 
+  private curentUserSubject: BehaviorSubject<UserSession>;
+  public currentUser: Observable<UserSession>;
+
   private CURRENT_USER = "_current-user";
 
   constructor(private http: HttpClient, private router: Router) {
+    this.curentUserSubject = new BehaviorSubject<UserSession>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.curentUserSubject.asObservable();
   }
 
-  request(requestBody:any, endpoint:string, requestMethod:string):Promise<any> {
+  public get currentUserValue(): UserSession {
+    return this.curentUserSubject.getValue();
+  }
+
+  public set currentUserValue(userSession) {
+    localStorage.setItem(this.CURRENT_USER, JSON.stringify(userSession));
+    this.curentUserSubject.next(userSession);
+  }
+
+  public request(requestBody: any, endpoint: string, requestMethod: string): Promise<any> {
 
     switch (requestMethod) {
       case "POST":
@@ -35,24 +50,32 @@ export class RestService {
     }
   }
 
-  setSession(session: UserSession) {
-    localStorage.setItem(this.CURRENT_USER, JSON.stringify(session));
-
+  setSession(userSession: UserSession) {
+    localStorage.setItem(this.CURRENT_USER, JSON.stringify(userSession));
+    this.curentUserSubject.next(userSession);
   }
 
   getToken(): string {
-    const session = this.getSession();
+
+    const userSession = this.curentUserSubject.getValue();
+
+    if (userSession.token) {
+      return userSession.token;
+    }
+
+    /*const session = this.getSession();
     if (session)
-      return session.token;
+      return session.token;*/
 
     return null;
   }
 
   logout() {
     localStorage.removeItem(this.CURRENT_USER);
+    this.curentUserSubject.next(null);
   }
 
-  getSession() {
+  /*getSession() {
     return JSON.parse(localStorage.getItem(this.CURRENT_USER));
-  }
+  }*/
 }

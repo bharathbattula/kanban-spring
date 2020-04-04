@@ -18,6 +18,9 @@ export class LoginComponent implements OnInit {
   registrationForm: FormGroup;
 
   constructor(private fb: FormBuilder, private rest: RestService, private router: Router) {
+    if (this.rest.currentUserValue) {
+      this.router.navigateByUrl('app');
+    }
   }
 
   ngOnInit() {

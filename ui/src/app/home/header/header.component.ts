@@ -1,21 +1,27 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {MatToolbar} from '@angular/material';
 import {RestService} from '../../rest.service';
 import {DataService} from '../../data.service';
 import {Router} from '@angular/router';
+import {UserSession} from "../../model/UserSession";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   @ViewChild('appToolbar', {static: true}) appToolbar: MatToolbar;
 
   @Output() public sidenavToggle = new EventEmitter();
 
+  private currentUser: UserSession;
+  private currentUserSubscriber: Subscription;
+
   constructor(private rest: RestService, private dataService: DataService, private router: Router) {
+    this.currentUserSubscriber = this.rest.currentUser.subscribe(user => this.currentUser = user);
   }
 
   ngOnInit() {
@@ -39,5 +45,9 @@ export class HeaderComponent implements OnInit {
 
   logout($event: MouseEvent) {
     this.rest.logout();
+  }
+
+  ngOnDestroy(): void {
+    this.currentUserSubscriber.unsubscribe();
   }
 }

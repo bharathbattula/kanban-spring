@@ -33,14 +33,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.mediaQuery = mediaMatcher.matchMedia('(max-width: 600px)');
     this._mediaQueryListner = () => changeDectorRef.detectChanges();
     this.mediaQuery.addListener(this._mediaQueryListner);
-
-    // this.loadProjects();
+    
   }
 
   ngOnInit() {
-    this.rest.request(null, 'hello', 'GET')
-      .then(response => console.log(`response :: ${response.success}`))
-      .catch(error => console.log(`error :: ${error}`));
 
   }
 

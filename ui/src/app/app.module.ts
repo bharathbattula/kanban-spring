@@ -12,7 +12,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HomeComponent} from './home/home.component';
 import {HeaderComponent} from './home/header/header.component';
 import {SidenavComponent} from './home/sidenav/sidenav.component';
-import {AppRequestInterceptor} from './app.request.interceptor';
+import {RequestInterceptor} from './helper/request.interceptor';
 import {CookieService} from 'ngx-cookie-service';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BoardComponent} from './board/board.component';
@@ -20,6 +20,7 @@ import {AddProjectComponent} from './home/add-project/add-project.component';
 import {TaskCardComponent} from './board/task-card/task-card.component';
 import {ListComponent} from './board/list/list.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {ErrorInterceptor} from "./helper/error.interceptor";
 
 
 @NgModule({
@@ -50,8 +51,12 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AppRequestInterceptor,
+      useClass: RequestInterceptor,
       multi: true,
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
     },
     CookieService,
   ],

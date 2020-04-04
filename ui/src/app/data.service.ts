@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Project} from "./model/Project";
 
 @Injectable({
@@ -7,11 +7,26 @@ import {Project} from "./model/Project";
 })
 export class DataService {
 
-  public projectDataSource = new BehaviorSubject<Array<Project>>([]);
+  public projectDataSource: BehaviorSubject<Array<Project>>;
+  public projectData$: Observable<Array<Project>>;
 
-  public projectData$ = this.projectDataSource.asObservable();
+  private currentProjectSubject: BehaviorSubject<Project>;
+  public currenProject$: Observable<Project>;
 
   constructor() {
+    this.projectDataSource = new BehaviorSubject<Array<Project>>([]);
+    this.projectData$ = this.projectDataSource.asObservable();
+
+    this.currentProjectSubject = new BehaviorSubject<Project>(null);
+    this.currenProject$ = this.currentProjectSubject.asObservable();
+  }
+
+  public getCurrentProjectValue(): Project {
+    return this.currentProjectSubject.getValue();
+  }
+
+  public setCurrentProjectValue(project) {
+    this.currentProjectSubject.next(project);
   }
 
   getProject(name: string) {

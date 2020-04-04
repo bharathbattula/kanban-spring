@@ -1,5 +1,5 @@
 <div class="board-container">
-  <app-list *ngFor="let l of list" [list]="l" [project]="project"></app-list>
+  <app-list *ngFor="let l of list" [list]="l"></app-list>
   <div class="add-list-button">
     <button mat-stroked-button color="accent" (click)="currentState = currentState === 'hidden' ? 'show' : 'hidden'">
       <mat-icon>add</mat-icon>

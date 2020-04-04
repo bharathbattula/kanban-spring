@@ -26,10 +26,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class BoardComponent implements OnInit {
 
-  list: List[]; /*= [
-    myTasks1,
-    myTasks2
-  ]*/
+  list: List[];
 
   project: Project;
   currentState: string = 'hidden';
@@ -41,25 +38,27 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(value => {
+
       this.project = this.dataService.getProject(value.get('name'));
+      this.dataService.setCurrentProjectValue(this.project);
+
       this.loadProjectData();
     })
-
     // _.forEach(this.list, l => _.forEach(l, t => t.user.fullName = _.startCase(t.user.firstName + ' ' + t.user.lastName)));
   }
 
   loadProjectData() {
 
-    this.rest.request(null, `project/9/list`, 'GET')
-      .then(list => {
-        this.list = list;
-        console.log(this.list);
-      })
-      .catch(error => {
-        if (error.status === 401) {
-          this.router.navigateByUrl('/login');
-        }
-      });
+    this.rest.request(null, `project/${this.project.id}/list`, 'GET')
+        .then(list => {
+          this.list = list;
+          console.log(this.list);
+        })
+        .catch(error => {
+          if (error.status === 401) {
+            this.router.navigateByUrl('/login');
+          }
+        });
   }
 
   addNewList(listForm: any) {
