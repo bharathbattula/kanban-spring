@@ -9,10 +9,11 @@
 
   .add-list-button {
     padding: 5px;
+    display: flex;
+    flex-direction: column;
 
     > button {
       width: 222px;
-      margin: auto;
     }
   }
 

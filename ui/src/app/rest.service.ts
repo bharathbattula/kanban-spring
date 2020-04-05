@@ -17,11 +17,12 @@ export class RestService {
   private CURRENT_USER = "_current-user";
 
   constructor(private http: HttpClient, private router: Router) {
-    this.curentUserSubject = new BehaviorSubject<UserSession>(JSON.parse(localStorage.getItem('currentUser')));
+    this.curentUserSubject = new BehaviorSubject<UserSession>(JSON.parse(localStorage.getItem(this.CURRENT_USER)));
     this.currentUser = this.curentUserSubject.asObservable();
   }
 
   public get currentUserValue(): UserSession {
+
     return this.curentUserSubject.getValue();
   }
 
@@ -59,13 +60,9 @@ export class RestService {
 
     const userSession = this.curentUserSubject.getValue();
 
-    if (userSession.token) {
+    if (userSession && userSession.token) {
       return userSession.token;
     }
-
-    /*const session = this.getSession();
-    if (session)
-      return session.token;*/
 
     return null;
   }
@@ -73,9 +70,7 @@ export class RestService {
   logout() {
     localStorage.removeItem(this.CURRENT_USER);
     this.curentUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
-  /*getSession() {
-    return JSON.parse(localStorage.getItem(this.CURRENT_USER));
-  }*/
 }
