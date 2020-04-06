@@ -3,9 +3,9 @@ import {MatSidenav} from '@angular/material';
 import {HeaderComponent} from './header/header.component';
 import {MediaObserver} from '@angular/flex-layout';
 import {MediaMatcher} from '@angular/cdk/layout';
-import {RestService} from '../rest.service';
+import {RestService} from '../shared/services/rest.service';
 import {Router} from '@angular/router';
-import {DataService} from '../data.service';
+import {DataService} from '../shared/services/data.service';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.mediaQuery = mediaMatcher.matchMedia('(max-width: 600px)');
     this._mediaQueryListner = () => changeDectorRef.detectChanges();
     this.mediaQuery.addListener(this._mediaQueryListner);
-    
+
   }
 
   ngOnInit() {

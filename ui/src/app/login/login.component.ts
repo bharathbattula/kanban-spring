@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {RestService} from "../rest.service";
-import {Login} from "../model/Login";
+import {RestService} from "../shared/services/rest.service";
+import {Login} from "../shared/model/Login";
 import {Router} from "@angular/router";
 
 @Component({
@@ -22,18 +22,18 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-  
+
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
-    })
+    });
 
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.min(8)]]
-    })
+    });
 
   }
 

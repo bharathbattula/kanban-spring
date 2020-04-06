@@ -6,10 +6,12 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
-import {List} from '../../model/List';
-import {RestService} from '../../rest.service';
-import {Project} from '../../model/Project';
-import {DataService} from "../../data.service";
+import {List} from '../../shared/model/List';
+import {RestService} from '../../shared/services/rest.service';
+import {Project} from '../../shared/model/Project';
+import {DataService} from "../../shared/services/data.service";
+import {BaseComponent} from "../../shared/base.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -29,7 +31,7 @@ import {DataService} from "../../data.service";
     ])
   ]
 })
-export class ListComponent implements OnInit {
+export class ListComponent extends BaseComponent implements OnInit {
 
   @Input()
   list: List;
@@ -47,7 +49,8 @@ export class ListComponent implements OnInit {
 
   taskForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private rest: RestService, private dataService: DataService) {
+  constructor(private fb: FormBuilder, private rest: RestService, private dataService: DataService, public snackBar: MatSnackBar) {
+    super("list", snackBar);
     this.project = this.dataService.getCurrentProjectValue();
   }
 
@@ -95,6 +98,7 @@ export class ListComponent implements OnInit {
         console.log(this.list);
         this.taskForm.reset();
         this.currentState = 'hidden'
+        this.showNotification({message: `${task.title} is created`, action: 'success'});
       })
       .catch(error => {
         console.log(error);

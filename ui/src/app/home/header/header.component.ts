@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {MatToolbar} from '@angular/material';
-import {RestService} from '../../rest.service';
-import {DataService} from '../../data.service';
+import {RestService} from '../../shared/services/rest.service';
+import {DataService} from '../../shared/services/data.service';
 import {Router} from '@angular/router';
-import {UserSession} from "../../model/UserSession";
+import {UserSession} from "../../shared/model/UserSession";
 import {Subscription} from "rxjs";
 
 @Component({

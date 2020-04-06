@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Task} from '../../model/Task';
+import {Task} from '../../shared/model/Task';
 import {ListComponent} from '../list/list.component';
 import * as moment from 'moment';
 

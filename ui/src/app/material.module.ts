@@ -8,6 +8,7 @@ import {
   MatListModule,
   MatMenuModule,
   MatSidenavModule,
+  MatSnackBarModule,
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
@@ -36,7 +37,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ],
   exports : [
     MatButtonModule,
@@ -54,7 +56,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule { }

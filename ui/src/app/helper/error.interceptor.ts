@@ -2,7 +2,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/com
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {Injectable} from "@angular/core";
-import {RestService} from "../rest.service";
+import {RestService} from "../shared/services/rest.service";
 
 
 @Injectable()

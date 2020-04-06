@@ -1,6 +1,6 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {Observable} from "rxjs";
-import {RestService} from "../rest.service";
+import {RestService} from "../shared/services/rest.service";
 import {Injectable} from "@angular/core";
 
 
