@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public class BoardListService {
 		return boardLists;
 	}
 
+	@Transactional
 	public BoardList saveBoardList(final Long projectId, final BoardList boardList) {
 
 		final Optional<Project> project = this.projectRepository.findById(projectId);
@@ -51,6 +53,8 @@ public class BoardListService {
 		return this.boardListRepository.save(boardList);
 	}
 
+
+	@Transactional
 	public void deleteBoardList(final Long projectId, final Long boardListId) {
 		if (!this.projectRepository.existsById(projectId)) {
 			throw new ResourceNotFoundException("Project " + projectId + "is not found");

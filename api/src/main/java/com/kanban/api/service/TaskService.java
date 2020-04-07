@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,10 +41,11 @@ public class TaskService {
 				.filter(boardList -> boardList.getId().equals(listId))
 				.map(boardList -> this.taskRepository.findAllByBoardListId(listId))
 				.findFirst()
-				.orElseThrow(() -> new ResourceNotFoundException("Board List "+ listId + "is not found"));
+				.orElseThrow(() -> new ResourceNotFoundException("Board List " + listId + "is not found"));
 
 	}
 
+	@Transactional
 	public Task saveTask(final Long projectId, final Long boardListId, final Task task) {
 
 		if (!this.projectRepository.existsById(projectId)) {
@@ -61,13 +63,15 @@ public class TaskService {
 		return this.taskRepository.save(task);
 	}
 
+
+	@Transactional
 	public void deleteTask(final Long projectId, final Long boardListId, final Long taskId) {
 
-		if(!this.projectRepository.existsById(projectId)) {
-			throw new ResourceNotFoundException("Project "+ projectId + "is not found");
+		if (!this.projectRepository.existsById(projectId)) {
+			throw new ResourceNotFoundException("Project " + projectId + "is not found");
 		}
 
-		if(this.taskRepository.deleteByIdAndBoardListId(taskId, boardListId) <= 0)
+		if (this.taskRepository.deleteByIdAndBoardListId(taskId, boardListId) <= 0)
 			throw new BadRequestException("Could not delete the Task");
 	}
 

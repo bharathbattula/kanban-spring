@@ -42,10 +42,15 @@ public class TaskController {
 			return ResponseEntity.ok(this.taskService.getTasks(projectId, listId));
 
 		} catch (final ResourceNotFoundException e) {
+
+			LOGGER.error("error extracting tasks", e);
+
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(Collections.singletonMap(ERROR, e.getMessage()));
 
 		} catch (final Exception e) {
+			LOGGER.error("error extracting tasks", e);
+
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(Collections.singletonMap(ERROR, "Something went wrong"));
 		}
@@ -60,10 +65,14 @@ public class TaskController {
 			return ResponseEntity.ok(this.taskService.saveTask(projectId, listId, task));
 
 		} catch (final BadRequestException e) {
+			LOGGER.error("error updating task", e);
+
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(Collections.singletonMap(ERROR, e.getMessage()));
 
 		} catch (final Exception e) {
+			LOGGER.error("error updating task", e);
+
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(Collections.singletonMap(ERROR, "Something went wrong"));
 
@@ -81,6 +90,8 @@ public class TaskController {
 			return ResponseEntity.ok(Collections.singletonMap(SUCCESS, "Task deleted successfully"));
 
 		} catch (final Exception e) {
+			LOGGER.error("error deleting task", e);
+
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(Collections.singletonMap(ERROR, "Something went wrong"));
 

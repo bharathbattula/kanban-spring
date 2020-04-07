@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -54,12 +55,12 @@ public class ProjectService {
 		return this.projectRepository.findAllByUserId(userId);
 	}
 
+	@Transactional
 	public void deleteProject(final Long projectId) {
-
 		this.projectRepository.deleteById(projectId);
-
 	}
 
+	@Transactional
 	public Project updateProject(final Project project, final UserPrincipal userPrincipal) {
 
 		final User user = this.userRepository.findById(userPrincipal.getId()).get();
