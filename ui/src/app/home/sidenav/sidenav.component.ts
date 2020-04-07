@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Project} from '../../shared/model/Project';
 import {MatDialog} from '@angular/material';
-import {AddProjectComponent} from '../add-project/add-project.component';
+import {AddProjectComponent} from '../../dialog/add-project/add-project.component';
 import {DataService} from '../../shared/services/data.service';
 import {Subscription} from 'rxjs';
 

@@ -16,11 +16,12 @@ import {RequestInterceptor} from './helper/request.interceptor';
 import {CookieService} from 'ngx-cookie-service';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BoardComponent} from './board/board.component';
-import {AddProjectComponent} from './home/add-project/add-project.component';
+import {AddProjectComponent} from './dialog/add-project/add-project.component';
 import {TaskCardComponent} from './board/task-card/task-card.component';
 import {ListComponent} from './board/list/list.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {ErrorInterceptor} from "./helper/error.interceptor";
+import {ConfirmationComponent} from "./dialog/confirmation/confirmation.component";
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {ErrorInterceptor} from "./helper/error.interceptor";
     BoardComponent,
     AddProjectComponent,
     TaskCardComponent,
-    ListComponent
+    ListComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import {ErrorInterceptor} from "./helper/error.interceptor";
     CookieService,
   ],
   entryComponents: [
-    AddProjectComponent
+    AddProjectComponent,
+    ConfirmationComponent
   ],
   bootstrap: [AppComponent]
 })
