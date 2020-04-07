@@ -12,6 +12,7 @@ import {Project} from '../../shared/model/Project';
 import {DataService} from "../../shared/services/data.service";
 import {BaseComponent} from "../../shared/base.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -49,8 +50,12 @@ export class ListComponent extends BaseComponent implements OnInit {
 
   taskForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private rest: RestService, private dataService: DataService, public snackBar: MatSnackBar) {
-    super("list", snackBar);
+  constructor(private fb: FormBuilder,
+              private rest: RestService,
+              private dataService: DataService,
+              public snackBar: MatSnackBar,
+              public matDialog: MatDialog) {
+    super("list", snackBar, matDialog);
     this.project = this.dataService.getCurrentProjectValue();
   }
 
@@ -102,6 +107,19 @@ export class ListComponent extends BaseComponent implements OnInit {
       })
       .catch(error => {
         console.log(error);
+      });
+
+  }
+
+  deleteCallback(data: any) {
+
+    this.rest.request(null, `project/${this.project.id}/list/${this.list.id}/task/${data.id}`, 'DELETE')
+      .then(response => {
+        _.remove(this.list.tasks, task => task.id === data.id);
+        this.showNotification({message: `${data.title} is deleted successfully`});
+      })
+      .catch(error => {
+        console.error(error);
       });
 
   }

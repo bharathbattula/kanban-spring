@@ -36,6 +36,10 @@
     </div>
   </div>
   <div>
-    <span class="detail-view-button">View More...</span>
+    <span class="detail-view-button" fxFlex="80">View More...</span>
+    <button mat-icon-button fxFlex="20" aria-label="Delete task" color="warn"
+            (click)="listComponent.deleteConfirmation(task, '#'+task.id +' '+task.title)">
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
 </mat-card>

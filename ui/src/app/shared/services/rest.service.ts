@@ -11,30 +11,30 @@ export class RestService {
 
   private host = "http://localhost:8080/api";
 
-  private curentUserSubject: BehaviorSubject<UserSession>;
+  private currentUserSubject: BehaviorSubject<UserSession>;
   public currentUser: Observable<UserSession>;
 
   private CURRENT_USER = "_current-user";
 
   constructor(private http: HttpClient, private router: Router) {
-    this.curentUserSubject = new BehaviorSubject<UserSession>(JSON.parse(localStorage.getItem(this.CURRENT_USER)));
-    this.currentUser = this.curentUserSubject.asObservable();
+    this.currentUserSubject = new BehaviorSubject<UserSession>(JSON.parse(localStorage.getItem(this.CURRENT_USER)));
+    this.currentUser = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): UserSession {
 
-    return this.curentUserSubject.getValue();
+    return this.currentUserSubject.getValue();
   }
 
   public set currentUserValue(userSession) {
     localStorage.setItem(this.CURRENT_USER, JSON.stringify(userSession));
-    this.curentUserSubject.next(userSession);
+    this.currentUserSubject.next(userSession);
   }
 
   public request(requestBody: any, endpoint: string, requestMethod: string): Promise<any> {
 
     switch (requestMethod) {
-      case "POST":
+      case 'POST':
         return this.http.post(this.host + "/" + endpoint, requestBody)
           .toPromise()
           .then(response => response)
@@ -44,8 +44,18 @@ export class RestService {
             }
           });
 
-      case "GET":
+      case 'GET':
         return this.http.get(this.host + "/" + endpoint, {})
+          .toPromise()
+          .then(response => response);
+
+      case 'PUT':
+        return this.http.put(this.host + "/" + endpoint, requestBody, {})
+          .toPromise()
+          .then(response => response);
+
+      case 'DELETE' :
+        return this.http.delete(this.host + '/' + endpoint, {})
           .toPromise()
           .then(response => response);
     }
@@ -53,12 +63,12 @@ export class RestService {
 
   setSession(userSession: UserSession) {
     localStorage.setItem(this.CURRENT_USER, JSON.stringify(userSession));
-    this.curentUserSubject.next(userSession);
+    this.currentUserSubject.next(userSession);
   }
 
   getToken(): string {
 
-    const userSession = this.curentUserSubject.getValue();
+    const userSession = this.currentUserSubject.getValue();
 
     if (userSession && userSession.token) {
       return userSession.token;
@@ -69,7 +79,7 @@ export class RestService {
 
   logout() {
     localStorage.removeItem(this.CURRENT_USER);
-    this.curentUserSubject.next(null);
+    this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
 
