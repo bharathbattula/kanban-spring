@@ -1,4 +1,8 @@
-<div class="list-container">
+<div class="list-container"
+     [id]="list.name"
+     cdkDropList
+     [cdkDropListData]="list.tasks"
+     (cdkDropListDropped)="drop($event)">
 
   <div class="add-task">
     <button mat-icon-button aria-label="Add new task" color="accent"
@@ -62,5 +66,5 @@
     <p>No tasks yet</p>
   </div>
 
-  <app-task-card *ngFor="let task of list.tasks" [task]="task" [listComponent]="this"></app-task-card>
+  <app-task-card cdkDrag *ngFor="let task of list.tasks" [task]="task" [listComponent]="this"></app-task-card>
 </div>

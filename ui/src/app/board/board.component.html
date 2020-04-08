@@ -1,4 +1,4 @@
-<div class="board-container">
+<div class="board-container" cdkDropListGroup>
   <app-list *ngFor="let l of list" [list]="l"></app-list>
   <div class="add-list-button">
     <button mat-stroked-button color="accent" (click)="currentState = currentState === 'hidden' ? 'show' : 'hidden'">

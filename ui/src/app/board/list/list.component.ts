@@ -13,6 +13,7 @@ import {DataService} from "../../shared/services/data.service";
 import {BaseComponent} from "../../shared/base.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 
 
 @Component({
@@ -69,13 +70,14 @@ export class ListComponent extends BaseComponent implements OnInit {
     })
   }
 
+
   removeParticipant(user: string) {
     _.remove(this.taskParticipants, u => u === user);
     this.users.push(user);
   }
 
   addParticipants($event: MatChipInputEvent) {
-    if($event.value.trim().length != 0) {
+    if ($event.value.trim().length != 0) {
       // this.users.push($event.value);
     }
   }
@@ -122,6 +124,17 @@ export class ListComponent extends BaseComponent implements OnInit {
         console.error(error);
       });
 
+  }
+
+  drop($event: CdkDragDrop<Task[]>) {
+    if ($event.previousContainer === $event.container) {
+      moveItemInArray($event.container.data, $event.previousIndex, $event.currentIndex);
+    } else {
+      transferArrayItem($event.previousContainer.data,
+        $event.container.data,
+        $event.previousIndex,
+        $event.currentIndex);
+    }
   }
 
 }

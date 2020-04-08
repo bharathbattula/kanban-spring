@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {RestService} from '../rest.service';
-import {DataService} from '../data.service';
+import {RestService} from '../shared/services/rest.service';
+import {DataService} from '../shared/services/data.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Project} from '../model/Project';
-import {List} from '../model/List';
+import {Project} from '../shared/model/Project';
+import {List} from '../shared/model/List';
 import * as _ from 'lodash';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
