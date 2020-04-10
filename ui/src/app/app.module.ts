@@ -22,6 +22,7 @@ import {ListComponent} from './board/list/list.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {ErrorInterceptor} from "./helper/error.interceptor";
 import {ConfirmationComponent} from "./dialog/confirmation/confirmation.component";
+import {TaskDetailComponent} from './board/task-detail/task-detail.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {ConfirmationComponent} from "./dialog/confirmation/confirmation.componen
     AddProjectComponent,
     TaskCardComponent,
     ListComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    TaskDetailComponent
   ],
   imports: [
     BrowserModule,

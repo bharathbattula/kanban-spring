@@ -36,7 +36,10 @@
     </div>
   </div>
   <div>
-    <span class="detail-view-button" fxFlex="80">View More...</span>
+    <a class="detail-view-button" [routerLink]="['task-detail', task.id]"
+       fxFlex="80">
+      View More...
+    </a>
     <button mat-icon-button fxFlex="20" aria-label="Delete task" color="warn"
             (click)="listComponent.deleteConfirmation(task, '#'+task.id +' '+task.title)">
       <mat-icon>delete</mat-icon>
