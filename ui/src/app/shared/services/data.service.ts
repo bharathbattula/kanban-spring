@@ -11,14 +11,14 @@ export class DataService {
   public projectData$: Observable<Array<Project>>;
 
   private currentProjectSubject: BehaviorSubject<Project>;
-  public currenProject$: Observable<Project>;
+  public currentProject$: Observable<Project>;
 
   constructor() {
     this.projectDataSource = new BehaviorSubject<Array<Project>>([]);
     this.projectData$ = this.projectDataSource.asObservable();
 
     this.currentProjectSubject = new BehaviorSubject<Project>(null);
-    this.currenProject$ = this.currentProjectSubject.asObservable();
+    this.currentProject$ = this.currentProjectSubject.asObservable();
   }
 
   public getCurrentProjectValue(): Project {

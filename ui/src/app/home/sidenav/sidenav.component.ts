@@ -36,8 +36,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
           });
       },
       error => console.log(error)
-    )
-    ;
+    );
   }
 
   addProjectDialog(): void {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {RestService} from '../shared/services/rest.service';
 import {DataService} from '../shared/services/data.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -6,6 +6,7 @@ import {Project} from '../shared/model/Project';
 import {List} from '../shared/model/List';
 import * as _ from 'lodash';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-board',
@@ -24,7 +25,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     ])
   ]
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
 
   list: List[];
 
@@ -32,18 +33,38 @@ export class BoardComponent implements OnInit {
   currentState: string = 'hidden';
   addingList: boolean = false;
 
+  subscriber: Subscription;
 
   constructor(private rest: RestService, private dataService: DataService, private router: Router, private activatedRoute: ActivatedRoute) {
+
   }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(value => {
 
-      this.project = this.dataService.getProject(value.get('name'));
-      this.dataService.setCurrentProjectValue(this.project);
+      if (!this.project) {
 
-      this.loadProjectData();
-    })
+        this.project = this.dataService.getProject(value.get('name'));
+        this.dataService.setCurrentProjectValue(this.project);
+        this.loadProjectData();
+      }
+    });
+
+    //subscription get the project details in case of page refresh
+    this.subscriber = this.dataService.projectData$.subscribe(
+      (projects) => {
+
+        if (!this.project && projects.length > 0) {
+          const urlSegment = this.router.url.split('/').pop();
+
+          this.project = projects.find(project => project.name === urlSegment);
+          this.dataService.setCurrentProjectValue(this.project);
+          this.loadProjectData();
+        }
+      },
+      (error) => console.log(error)
+    );
+
     // _.forEach(this.list, l => _.forEach(l, t => t.user.fullName = _.startCase(t.user.firstName + ' ' + t.user.lastName)));
   }
 
@@ -87,6 +108,10 @@ export class BoardComponent implements OnInit {
         this.addingList = true;
         this.currentState = 'hidden';
       });
-
   }
+
+  ngOnDestroy(): void {
+    this.subscriber.unsubscribe();
+  }
+
 }
