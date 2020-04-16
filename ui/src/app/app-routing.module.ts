@@ -5,6 +5,7 @@ import {HomeComponent} from "./home/home.component";
 import {BoardComponent} from "./board/board.component";
 import {AuthGuard} from "./helper/auth.guard";
 import {TaskDetailComponent} from "./board/task-detail/task-detail.component";
+import {ProjectSettingComponent} from "./project-setting/project-setting.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -12,7 +13,8 @@ const routes: Routes = [
     path: 'app', component: HomeComponent, canActivate: [AuthGuard],
     children: [
       {path: 'project/:name', component: BoardComponent},
-      {path: 'project/:name/task-detail/:id', component: TaskDetailComponent}
+      {path: 'project/:name/task-detail/:id', component: TaskDetailComponent},
+      {path: 'project/:name/settings', component: ProjectSettingComponent}
     ]
   },
   {path: '', redirectTo: "/login", pathMatch: 'full'}
