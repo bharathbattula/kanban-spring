@@ -1,0 +1,56 @@
+table {
+  width: 80%;
+  border-spacing: 0.5em .5em;
+  padding: 0 1em 1em 0;
+
+  @media all and (max-width: 400px) {
+    border-spacing: 0.2em .2em;
+    padding: 0 .5em .5em 0;
+  }
+
+  tr {
+
+    td:nth-child(1) {
+      font-weight: bold;
+      padding-right: 5px;
+    }
+
+    td {
+      vertical-align: baseline;
+
+      p {
+        margin: auto 0;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+          div {
+            display: flex;
+
+            p {
+              width: 80%;
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+}
+
+.add-user-container {
+  display: flex;
+
+  mat-form-field {
+    width: 80%;
+    margin: auto 0;
+  }
+
+  button {
+    margin: auto;
+  }
+}

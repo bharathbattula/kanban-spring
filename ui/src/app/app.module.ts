@@ -23,7 +23,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {ErrorInterceptor} from "./helper/error.interceptor";
 import {ConfirmationComponent} from "./dialog/confirmation/confirmation.component";
 import {TaskDetailComponent} from './board/task-detail/task-detail.component';
-import { ProjectSettingComponent } from './project-setting/project-setting.component';
+import {ProjectSettingComponent} from './project-setting/project-setting.component';
+import {MatTableModule} from "@angular/material/table";
 
 
 @NgModule({
@@ -41,19 +42,20 @@ import { ProjectSettingComponent } from './project-setting/project-setting.compo
     TaskDetailComponent,
     ProjectSettingComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    FlexLayoutModule,
-    MatAutocompleteModule,
-    FormsModule,
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        FlexLayoutModule,
+        MatAutocompleteModule,
+        FormsModule,
+        MatTableModule,
 
-  ],
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

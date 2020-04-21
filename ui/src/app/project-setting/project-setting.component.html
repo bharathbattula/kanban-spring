@@ -1,32 +1,60 @@
 <div class="container">
+  <button mat-raised-button (click)="goBack($event)" color="accent">
     <mat-icon>arrow_back</mat-icon>
+    Go Back
+  </button>
   <div>
-    <h2>kanban</h2>
+    <h2>kanban settings:</h2>
   </div>
-  <div>
-    <h3>Owner</h3>
-    <h3>bharath battula</h3>
-  </div>
-  <div>
-    <h3>Description</h3>
-    <textarea>I like spring ecosystem, currently I'm leaning how utilize spring cloud module in microservice architecture environment</textarea>
-  </div>
-  <div>
-    <h3>Users</h3>
-    <ul>
-      <li>Bharath Battula</li>
-      <li>Kent simpson</li>\
-      <li>Prashnt</li>
-    </ul>
-  </div>
-  <div>
-    <h3>Add User</h3>
-    <mat-form-field floatPlaceholder="auto">
-      <input matInput
-             type="text"
-             required
-             placeholder="">
-    </mat-form-field>
-    <button mat-raised-button color="primary">ADD</button>
-  </div>
+  <table>
+    <tbody>
+    <tr>
+      <td>Owner:</td>
+      <td>bharath batthula</td>
+    </tr>
+    <tr>
+      <td>Description:</td>
+      <td>
+        <p>I like spring ecosystem, currently I'm leaning how utilize spring cloud module in microservice architecture
+          environment</p>
+        <!--<textarea>I like spring ecosystem, currently I'm leaning how utilize spring cloud module in microservice architecture environment</textarea>-->
+      </td>
+    </tr>
+    <tr>
+      <td>Users:</td>
+      <td>
+        <ul>
+          <li *ngFor="let user of users">
+            <div><p>{{user.name}}</p>
+              <button mat-icon-button (click)="deleteConfirm($event, user)">
+                <mat-icon class="mat-18">delete</mat-icon>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Add User:</td>
+      <td>
+        <div class="add-user-container">
+          <mat-form-field floatLabel="never">
+            <input matInput
+                   type="text"
+                   required
+                   placeholder="Type email here.." [matAutocomplete]="auto">
+          </mat-form-field>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let user of users" [value]="user.email">
+              {{user.email}}
+            </mat-option>
+          </mat-autocomplete>
+          <button mat-icon-button (click)="addUser($event)">
+            <mat-icon class="mat-18">check_circle_outline</mat-icon>
+          </button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>

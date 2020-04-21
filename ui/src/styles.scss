@@ -13,6 +13,10 @@ body {
 .container {
   width: 80%;
   margin: 25px auto;
+
+  @media all and (max-width: 400px) {
+    margin: 25px 10px;
+  }
 }
 
 mat-icon {
