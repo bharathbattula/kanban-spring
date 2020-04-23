@@ -63,7 +63,7 @@ public class UserPrincipal implements UserDetails {
 		return ProjectService.projects.stream()
 				.filter(project -> projectid.equals(project.getId()))
 				.map(project -> {
-					return user.getUsername().equals(project.getUser().getUsername()) ?
+					return user.getUsername().equals(project.getCreator().getUsername()) ?
 							new SimpleGrantedAuthority("ROLE_ADMIN") : new SimpleGrantedAuthority("ROLE_USER");
 				})
 				.collect(Collectors.toList());

@@ -4,19 +4,18 @@
     Go Back
   </button>
   <div>
-    <h2>kanban settings:</h2>
+    <h2>{{project.name}}</h2>
   </div>
   <table>
     <tbody>
     <tr>
       <td>Owner:</td>
-      <td>bharath batthula</td>
+      <td>{{project.creator.name}}</td>
     </tr>
     <tr>
       <td>Description:</td>
       <td>
-        <p>I like spring ecosystem, currently I'm leaning how utilize spring cloud module in microservice architecture
-          environment</p>
+        <p>{{project.description}}</p>
         <!--<textarea>I like spring ecosystem, currently I'm leaning how utilize spring cloud module in microservice architecture environment</textarea>-->
       </td>
     </tr>
@@ -24,7 +23,7 @@
       <td>Users:</td>
       <td>
         <ul>
-          <li *ngFor="let user of users">
+          <li *ngFor="let user of project.users">
             <div><p>{{user.name}}</p>
               <button mat-icon-button (click)="deleteConfirm($event, user)">
                 <mat-icon class="mat-18">delete</mat-icon>
@@ -38,17 +37,21 @@
       <td>Add User:</td>
       <td>
         <div class="add-user-container">
+
           <mat-form-field floatLabel="never">
             <input matInput
                    type="text"
                    required
-                   placeholder="Type email here.." [matAutocomplete]="auto">
+                   placeholder="Type email here.."
+                   [formControl]="userAutoCompleteControl"
+                   [matAutocomplete]="auto">
+            <mat-spinner matSuffix mode="indeterminate" diameter="17" *ngIf="showSpinner"></mat-spinner>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let user of userAutoComplete$ | async; let index = index" [value]="user.email">
+                {{user.email}}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let user of users" [value]="user.email">
-              {{user.email}}
-            </mat-option>
-          </mat-autocomplete>
           <button mat-icon-button (click)="addUser($event)">
             <mat-icon class="mat-18">check_circle_outline</mat-icon>
           </button>

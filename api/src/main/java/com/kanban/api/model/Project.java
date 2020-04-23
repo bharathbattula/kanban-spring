@@ -42,9 +42,9 @@ public class Project extends DateAudit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@JoinColumn(name = "userId", nullable = false, updatable = false)
+	@JoinColumn(name = "creator", nullable = false, updatable = false)
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-	private User user;
+	private User creator;
 
 	@NotBlank
 	@Size(min = 5, max = 10)

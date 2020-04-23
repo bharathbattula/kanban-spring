@@ -46,13 +46,13 @@ public class ProjectService {
 
 		final User user = this.userRepository.findById(userPrincipal.getId()).get();
 
-		project.setUser(user);
+		project.setCreator(user);
 
 		return this.projectRepository.save(project);
 	}
 
 	public List getAllProjects(final Long userId) {
-		return this.projectRepository.findAllByUserId(userId);
+		return this.projectRepository.findAllByWhereUserId(userId);
 	}
 
 	@Transactional
@@ -65,7 +65,7 @@ public class ProjectService {
 
 		final User user = this.userRepository.findById(userPrincipal.getId()).get();
 
-		project.setUser(user);
+		project.setCreator(user);
 
 		return this.projectRepository.save(project);
 	}
