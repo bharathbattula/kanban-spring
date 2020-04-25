@@ -130,4 +130,25 @@ public class ProjectController {
 		}
 	}
 
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	@DeleteMapping({"/{projectId}/user"})
+	public ResponseEntity removeAccess(@PathVariable final Long projectId, @RequestBody final User user) {
+
+		try {
+
+			return ResponseEntity.ok(this.projectService.removeAccess(projectId, user));
+
+		} catch (final BadRequestException e) {
+			return ResponseEntity
+					.status(HttpStatus.BAD_REQUEST)
+					.body(Collections.singletonMap(ERROR, e.getMessage()));
+
+		} catch (final Exception e) {
+			return ResponseEntity
+					.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Collections.singletonMap(ERROR, INTERNAL_SERVER_ERROR_MSG));
+		}
+
+	}
+
 }

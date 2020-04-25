@@ -87,4 +87,20 @@ public class ProjectService {
 		return this.projectRepository.save(project);
 
 	}
+
+	public Project removeAccess(final Long projectId, final User user) {
+
+		final Project project = this.projectRepository
+				.findById(projectId)
+				.orElseThrow(() -> new BadRequestException("Invalid Project"));
+
+		final User newUser = this.userRepository
+				.findById(user.getId())
+				.orElseThrow(() -> new BadRequestException("Invalid User"));
+
+		project.getUsers().remove(user);
+
+		return this.projectRepository.save(project);
+
+	}
 }
