@@ -1,6 +1,7 @@
 package com.kanban.api.service;
 
 import com.kanban.api.config.authentication.UserPrincipal;
+import com.kanban.api.exception.BadRequestException;
 import com.kanban.api.model.Project;
 import com.kanban.api.model.User;
 import com.kanban.api.repository.ProjectRepository;
@@ -68,5 +69,22 @@ public class ProjectService {
 		project.setCreator(user);
 
 		return this.projectRepository.save(project);
+	}
+
+	@Transactional
+	public Project addNewUserToProject(final Long projectId, final User user) throws Exception {
+
+		final Project project = this.projectRepository
+				.findById(projectId)
+				.orElseThrow(() -> new BadRequestException("Invalid Project"));
+
+		final User newUser = this.userRepository
+				.findById(user.getId())
+				.orElseThrow(() -> new BadRequestException("Invalid User"));
+
+		project.getUsers().add(newUser);
+
+		return this.projectRepository.save(project);
+
 	}
 }

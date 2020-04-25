@@ -5,7 +5,9 @@ import {HttpClient} from "@angular/common/http";
 import {catchError, debounceTime, finalize, map, startWith, switchMap, tap} from "rxjs/operators";
 import {User} from "../shared/model/User";
 import {Observable, of} from "rxjs";
-import {FormControl} from "@angular/forms";
+import {FormControl, Validators} from "@angular/forms";
+import * as _ from 'lodash';
+import {RestService} from "../shared/services/rest.service";
 
 @Component({
   selector: 'app-project-setting',
@@ -16,17 +18,18 @@ export class ProjectSettingComponent implements OnInit {
 
   project: Project;
 
-  userAutoComplete$: Observable<User> = null;
-  userAutoCompleteControl = new FormControl();
+  filteredUsers: User[] = null;
+  userAutoCompleteControl = new FormControl('', [Validators.email, Validators.required]);
   showSpinner: boolean = false;
+  private selectedUser: User;
 
-  constructor(private dataService: DataService, private http: HttpClient) {
+  constructor(private dataService: DataService, private http: HttpClient, private rest: RestService) {
   }
 
   ngOnInit() {
     this.project = this.dataService.getCurrentProjectValue();
 
-    this.userAutoComplete$ = this.userAutoCompleteControl.valueChanges.pipe(
+    this.userAutoCompleteControl.valueChanges.pipe(
       startWith(''),
       // delay emits
       debounceTime(300),
@@ -46,7 +49,7 @@ export class ProjectSettingComponent implements OnInit {
       /*pipe(
         finalize(() => this.showSpinner = false),
       )*/
-    );
+    ).subscribe(users => this.filteredUsers = users);
 
   }
 
@@ -69,19 +72,37 @@ export class ProjectSettingComponent implements OnInit {
   }
 
   addUser($event: MouseEvent) {
-    //add new user to current project
+
+    const formValue = this.userAutoCompleteControl.value;
+
+    if (formValue) {
+      const user = _.find(this.filteredUsers, {'email': formValue});
+
+      if (user) {
+
+        this.rest.request(user, `project/${this.project.id}/user`, 'POST')
+          .then(value => {
+            console.log(value);
+            this.dataService.setCurrentProjectValue(value);
+            this.project = value;
+          })
+          .catch(reason => console.error(reason));
+
+      }
+    }
   }
 
   search(query: string): Observable<User> {
 
-    return this.http.get<User>("http://localhost:8080/api/user/search",
+    return this.http.get<User>('http://localhost:8080/api/user/search',
       {
-        observe: "body",
+        observe: 'body',
         params: {query: query}
       })
       .pipe(
         map(users => users)
       );
   }
+
 
 }

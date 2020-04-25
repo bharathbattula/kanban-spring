@@ -40,14 +40,14 @@
 
           <mat-form-field floatLabel="never">
             <input matInput
-                   type="text"
+                   type="email"
                    required
                    placeholder="Type email here.."
                    [formControl]="userAutoCompleteControl"
                    [matAutocomplete]="auto">
             <mat-spinner matSuffix mode="indeterminate" diameter="17" *ngIf="showSpinner"></mat-spinner>
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let user of userAutoComplete$ | async; let index = index" [value]="user.email">
+              <mat-option *ngFor="let user of filteredUsers; let index = index" [value]="user.email">
                 {{user.email}}
               </mat-option>
             </mat-autocomplete>

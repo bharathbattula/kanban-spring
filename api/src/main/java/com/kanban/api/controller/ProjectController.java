@@ -2,7 +2,9 @@ package com.kanban.api.controller;
 
 import com.kanban.api.common.Utility;
 import com.kanban.api.config.authentication.UserPrincipal;
+import com.kanban.api.exception.BadRequestException;
 import com.kanban.api.model.Project;
+import com.kanban.api.model.User;
 import com.kanban.api.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ import java.util.Collections;
 
 import static com.kanban.api.common.Constants.BASE_API;
 import static com.kanban.api.common.Constants.ERROR;
+import static com.kanban.api.common.Constants.INTERNAL_SERVER_ERROR_MSG;
 
 @RestController
 @RequestMapping(BASE_API + "/project")
@@ -56,7 +59,7 @@ public class ProjectController {
 		}
 	}
 
-//	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping
 	public ResponseEntity getProjects(final Authentication authentication) {
 		try {
@@ -101,6 +104,29 @@ public class ProjectController {
 		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(Collections.singletonMap(ERROR, e.getMessage()));
+		}
+	}
+
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	@PostMapping({"/{projectId}/user"})
+	public ResponseEntity addNewUser(@PathVariable final Long projectId, @RequestBody final User user) {
+
+		try {
+
+			return ResponseEntity
+					.ok(this.projectService.addNewUserToProject(projectId, user));
+
+		} catch (final BadRequestException e) {
+
+			return ResponseEntity
+					.status(HttpStatus.BAD_REQUEST)
+					.body(Collections.singletonMap(ERROR, e.getMessage()));
+
+		} catch (final Exception e) {
+			return ResponseEntity
+					.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Collections.singletonMap(ERROR, INTERNAL_SERVER_ERROR_MSG));
+
 		}
 	}
 
