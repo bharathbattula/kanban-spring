@@ -26,9 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomUserDetailService userDetailService;
 
-
 	@Autowired
 	private CustomAuthenticationEntryPoint authenticationEntryPoint;
+
+	@Autowired
+	private CustomAccessDeniedHandler accessDeniedHandler;
 
 	@Autowired
 	private CustomAuthenticationFilter authenticationFilter;
@@ -62,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.disable()
 				.exceptionHandling()
 				.authenticationEntryPoint(this.authenticationEntryPoint)
+				.accessDeniedHandler(this.accessDeniedHandler)
 				.and()
 				.authorizeRequests()
 				.antMatchers("/",
