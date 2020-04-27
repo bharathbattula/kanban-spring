@@ -88,14 +88,14 @@ public class ProjectService {
 
 	}
 
-	public Project removeAccess(final Long projectId, final User user) {
+	public Project removeAccess(final Long projectId, final Long userId) {
 
 		final Project project = this.projectRepository
 				.findById(projectId)
 				.orElseThrow(() -> new BadRequestException("Invalid Project"));
 
-		final User newUser = this.userRepository
-				.findById(user.getId())
+		final User user = this.userRepository
+				.findById(userId)
 				.orElseThrow(() -> new BadRequestException("Invalid User"));
 
 		project.getUsers().remove(user);

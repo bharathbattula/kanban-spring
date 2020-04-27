@@ -8,13 +8,18 @@ import {Observable, of} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
 import * as _ from 'lodash';
 import {RestService} from "../shared/services/rest.service";
+import {BaseComponent} from "../shared/base.component";
+import {MatDialog} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-project-setting',
   templateUrl: './project-setting.component.html',
   styleUrls: ['./project-setting.component.scss']
 })
-export class ProjectSettingComponent implements OnInit {
+export class ProjectSettingComponent extends BaseComponent implements OnInit {
 
   project: Project;
 
@@ -23,7 +28,14 @@ export class ProjectSettingComponent implements OnInit {
   showSpinner: boolean = false;
   private selectedUser: User;
 
-  constructor(private dataService: DataService, private http: HttpClient, private rest: RestService) {
+  constructor(private dataService: DataService,
+              private http: HttpClient,
+              private rest: RestService,
+              private router: Router,
+              private matDialog: MatDialog,
+              private matSnackBar: MatSnackBar,
+              private location: Location) {
+    super('Project setting', matSnackBar, matDialog);
   }
 
   ngOnInit() {
@@ -64,11 +76,21 @@ export class ProjectSettingComponent implements OnInit {
   }
 
   goBack($event: MouseEvent) {
-    //route back to previous page
+    this.location.back();
   }
 
-  deleteConfirm($event: MouseEvent, user: User) {
-    //delete confirmation popup
+  deleteCallback(user: User) {
+
+    if (user) {
+      this.rest.request(user, `project/${this.project.id}/user/${user.id}`, 'DELETE')
+        .then(value => {
+          console.log(value);
+          this.dataService.setCurrentProjectValue(value);
+          this.project = value;
+        })
+        .catch(reason => console.error(reason));
+    }
+
   }
 
   addUser($event: MouseEvent) {

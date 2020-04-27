@@ -25,7 +25,7 @@
         <ul>
           <li *ngFor="let user of project.users">
             <div><p>{{user.name}}</p>
-              <button mat-icon-button (click)="deleteConfirm($event, user)">
+              <button mat-icon-button (click)="deleteConfirmation(user, user.name + ' from project '+project.name)">
                 <mat-icon class="mat-18">delete</mat-icon>
               </button>
             </div>

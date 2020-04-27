@@ -107,7 +107,7 @@ public class ProjectController {
 		}
 	}
 
-	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping({"/{projectId}/user"})
 	public ResponseEntity addNewUser(@PathVariable final Long projectId, @RequestBody final User user) {
 
@@ -130,13 +130,18 @@ public class ProjectController {
 		}
 	}
 
-	@Secured({"ROLE_ADMIN", "ROLE_USER"})
-	@DeleteMapping({"/{projectId}/user"})
-	public ResponseEntity removeAccess(@PathVariable final Long projectId, @RequestBody final User user) {
+	@Secured({"ROLE_ADMIN"})
+	@DeleteMapping({"/{projectId}/user/{userId}"})
+	public ResponseEntity removeAccess(@PathVariable final Long projectId, @PathVariable final Long userId, final Authentication authentication) {
 
 		try {
 
-			return ResponseEntity.ok(this.projectService.removeAccess(projectId, user));
+			final UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+			if (userPrincipal.getId().equals(userId))
+				new BadRequestException("You can't perform this action, Since you're the admin of this project");
+
+			return ResponseEntity.ok(this.projectService.removeAccess(projectId, userId));
 
 		} catch (final BadRequestException e) {
 			return ResponseEntity

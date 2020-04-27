@@ -41,7 +41,7 @@ export abstract class BaseComponent {
         bottom: '',
         left: ''
       }
-    })
+    });
 
     this.confirmDialogRef.componentInstance.type = action;
 
@@ -50,7 +50,7 @@ export abstract class BaseComponent {
         this.deleteCallback(data);
       }
       this.confirmDialogRef = null;
-    })
+    });
 
   }
 
