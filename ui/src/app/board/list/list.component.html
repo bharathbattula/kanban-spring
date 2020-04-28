@@ -36,7 +36,7 @@
                       [selectable]="true"
                       [removable]="true"
                       (removed)="removeParticipant(user)">
-              {{user}}
+              {{user.username}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input matInput
@@ -50,8 +50,8 @@
             >
           </mat-chip-list>
           <mat-autocomplete #userAuto (optionSelected)="selected($event)">
-            <mat-option *ngFor="let user of users" [value]="user">
-              {{user}}
+            <mat-option *ngFor="let user of users" [value]="user.username">
+              {{user.username}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>

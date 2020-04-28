@@ -19,12 +19,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "Tasks", uniqueConstraints = {
@@ -62,4 +65,15 @@ public class Task extends DateAudit{
 	@ManyToOne(targetEntity = BoardList.class, fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private BoardList boardList;
+
+	@JoinColumn(name = "creator", nullable = false, updatable = false)
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+	private User creator;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "task_users",
+			joinColumns = @JoinColumn(name = "task_id"),
+			inverseJoinColumns = @JoinColumn(name = "user_id")
+	)
+	private Set<User> participants;
 }

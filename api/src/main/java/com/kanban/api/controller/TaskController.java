@@ -1,5 +1,7 @@
 package com.kanban.api.controller;
 
+import com.kanban.api.common.Utility;
+import com.kanban.api.config.authentication.UserPrincipal;
 import com.kanban.api.exception.BadRequestException;
 import com.kanban.api.exception.ResourceNotFoundException;
 import com.kanban.api.model.Task;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,10 +62,15 @@ public class TaskController {
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@PostMapping
 	@PutMapping
-	public ResponseEntity createTask(@PathVariable final Long projectId, @PathVariable final Long listId, @RequestBody final Task task) {
+	public ResponseEntity createTask(@PathVariable final Long projectId,
+									 @PathVariable final Long listId,
+									 @RequestBody final Task task,
+									 final Authentication authentication) {
 		try {
 
-			return ResponseEntity.ok(this.taskService.saveTask(projectId, listId, task));
+			final UserPrincipal userPrincipal = Utility.getUserPrincipalFromAuthentication(authentication);
+
+			return ResponseEntity.ok(this.taskService.saveTask(projectId, listId, task, userPrincipal));
 
 		} catch (final BadRequestException e) {
 			LOGGER.error("error updating task", e);

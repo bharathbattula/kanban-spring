@@ -14,6 +14,7 @@ import {BaseComponent} from "../../shared/base.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import {User} from "../../shared/model/User";
 
 
 @Component({
@@ -44,8 +45,8 @@ export class ListComponent extends BaseComponent implements OnInit {
 
   currentState = 'hidden';
 
-  users: String[] = ['Bharat', 'Amit', 'Prashant', 'Rishi', 'DD'];
-  taskParticipants: string[] = [];
+  users: User[] = [];
+  taskParticipants: User[] = [];
 
   separatorKeysCodes: number[] = [COMMA, ENTER];
 
@@ -58,6 +59,7 @@ export class ListComponent extends BaseComponent implements OnInit {
               public matDialog: MatDialog) {
     super("list", snackBar, matDialog);
     this.project = this.dataService.getCurrentProjectValue();
+    this.users = this.project.users;
   }
 
   ngOnInit() {
@@ -71,8 +73,8 @@ export class ListComponent extends BaseComponent implements OnInit {
   }
 
 
-  removeParticipant(user: string) {
-    _.remove(this.taskParticipants, u => u === user);
+  removeParticipant(user: User) {
+    _.remove(this.taskParticipants, u => _.isEqual(u, user));
     this.users.push(user);
   }
 
@@ -83,8 +85,10 @@ export class ListComponent extends BaseComponent implements OnInit {
   }
 
   selected($event: MatAutocompleteSelectedEvent) {
-      this.taskParticipants.push($event.option.value);
-      _.remove(this.users, u => u === $event.option.value);
+    const user = _.find(this.users, {'username': $event.option.value});
+
+    this.taskParticipants.push(user);
+    _.remove(this.users, u => _.isEqual(u, user));
   }
 
   addTask() {
@@ -95,7 +99,9 @@ export class ListComponent extends BaseComponent implements OnInit {
       title: formData.title,
       description: formData.description,
       deadLine: moment(formData.deadline).format('YYYY-MM-DD'),
-    }
+      participants: this.taskParticipants
+    };
+
     console.log(newTask);
 
     this.rest.request(newTask, `project/${this.project.id}/list/${this.list.id}/task`, 'POST')

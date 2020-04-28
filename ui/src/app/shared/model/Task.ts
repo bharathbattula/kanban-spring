@@ -5,7 +5,7 @@ export interface Task {
   id?: number;
   title: string;
   description: string;
-  user?: User;
+  creator?: User;
   deadLine?: Date;
-  participants?: string[];
+  participants?: User[];
 }
