@@ -85,16 +85,11 @@ public class AuthController {
 			return new ResponseEntity(Collections.singletonMap(ERROR, "Email already exist"), HttpStatus.BAD_REQUEST);
 		}
 
-		final User user = new User(signUpDto.getName(), signUpDto.getUsername(),
+		final User user = new User(signUpDto.getFirstName(), signUpDto.getLastName(), signUpDto.getUsername(),
 				signUpDto.getEmail(), signUpDto.getPassword());
 
 
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-
-//		final Role role = this.roleRepository.findByName(RoleName.ROLE_USER)
-//				.orElseThrow(() -> new ApplicationException("User role not set yet."));
-//
-//		user.setRoles(Collections.singleton(role));
 
 		this.userRepository.save(user);
 

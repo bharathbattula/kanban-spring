@@ -10,7 +10,10 @@ import javax.validation.constraints.NotBlank;
 public class SignUpDto {
 
 	@NotBlank
-	private String name;
+	private String firstName;
+
+	@NotBlank
+	private String lastName;
 
 	@NotBlank
 	private String username;

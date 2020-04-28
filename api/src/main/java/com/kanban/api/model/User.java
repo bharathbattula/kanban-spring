@@ -34,14 +34,20 @@ import javax.validation.constraints.Size;
 @Data
 @NoArgsConstructor
 public class User extends DateAudit {
+
 	private static final long serialVersionUID = -5322778564353566486L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotBlank
-	@Size(max = 40)
-	private String name;
+	@Size(max = 20)
+	private String firstName;
+
+	@NotBlank
+	@Size(max = 20)
+	private String lastName;
 
 	@NotBlank
 	@Size(max = 15)
@@ -57,11 +63,12 @@ public class User extends DateAudit {
 	@Size(max = 100, min = 8)
 	private String password;
 
-	public User(final String name, final String username, final String email, final String password) {
-		this.name = name;
+
+	public User(final String firstName, final String lastName, final String username, final String email, final String password) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 	}
-
 }
