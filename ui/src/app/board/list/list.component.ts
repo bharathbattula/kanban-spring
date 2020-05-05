@@ -140,7 +140,25 @@ export class ListComponent extends BaseComponent implements OnInit {
         $event.container.data,
         $event.previousIndex,
         $event.currentIndex);
+
+      console.log($event.container.id);
+
+      console.log($event.container.data[$event.currentIndex]);
+
+      this.updateTaskPosition($event.container.id, $event.container.data[$event.currentIndex]);
+
     }
   }
+
+  updateTaskPosition(listId: string, task: Task) {
+    this.rest.request(task, `project/${this.project.id}/list/${listId}/task`, 'PUT')
+      .then(task => {
+        console.log(task);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
 
 }
