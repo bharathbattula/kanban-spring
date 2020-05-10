@@ -9,6 +9,7 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,19 @@ public class JwtTokenProvider {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-	private final String secreteKey = "password";
+	@Value("${jwt.secret}")
+	private String secreteKey;
+
+	@Value("${jwt.expiration}")
+	private String expiration;
+
+	public JwtTokenProvider() {
+		try {
+			Long.parseLong(this.expiration);
+		} catch (final NumberFormatException e) {
+			this.expiration = "3600000";
+		}
+	}
 
 	public String generateToken(final Authentication authentication) {
 		final UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
@@ -28,7 +41,7 @@ public class JwtTokenProvider {
 		return Jwts.builder()
 				.setSubject(String.valueOf(userPrincipal.getId()))
 				.setIssuedAt(new Date())
-				.setExpiration(new Date(new Date().getTime() + 15 * 30 * 1000))
+				.setExpiration(new Date(new Date().getTime() + Long.parseLong(this.expiration)))
 				.signWith(SignatureAlgorithm.HS512, this.secreteKey)
 				.compact();
 
