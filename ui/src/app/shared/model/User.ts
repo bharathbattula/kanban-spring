@@ -5,4 +5,5 @@ export class User {
   lastName?: string;
   email?: string;
   fullName?: string;
+  initials?: string;
 }

@@ -19,15 +19,16 @@ mat-card {
   margin: 5px 0px;
 }
 
+
 .inner-container {
   display: flex;
   margin: 10px auto;
 }
 
 .deadline {
-  line-height:22px;
-  height:22px;
-  width:50%;
+  line-height: 22px;
+  height: 22px;
+  width: 50%;
   font-size: 14px;
 
   mat-icon {
@@ -131,4 +132,22 @@ span.detail-view-button {
 
 span.detail-view-button:hover {
   background-color: #f443366b;
+}
+
+.creator-container {
+  display: flex;
+  font-size: 14px;
+
+  div:nth-child(1) {
+    margin: auto 0;
+    margin-right: 5px;
+  }
+
+  img {
+    display: inline-block;
+  }
+
+  span {
+    display: inline-block;
+  }
 }
