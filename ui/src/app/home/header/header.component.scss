@@ -1,8 +1,12 @@
 @import "~src/theme";
 
 
-.toolbar-spacer {
+/*.toolbar-spacer {
   flex: 1 1 auto;
+}*/
+
+.mat-toolbar {
+  background: #FFFFFF;
 }
 
 .avatar-container {

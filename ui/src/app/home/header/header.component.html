@@ -1,13 +1,14 @@
-<mat-toolbar #appToolbar color="primary">
+<mat-toolbar #appToolbar>
   <div>
-    <button mat-icon-button (click)="toggleNavigation()">
-      <mat-icon>menu</mat-icon>
-    </button>
+    <mat-form-field>
+      <mat-select (selectionChange)="projectChange($event)">
+        <mat-option *ngFor="let p of projects" [value]="p">{{p.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
+
   <span fxFlex></span>
-  <!--  <button mat-icon-button [matMenuTriggerFor]="profile">-->
-  <!--    <mat-icon>more_vert</mat-icon>-->
-  <!--  </button>-->
+
   <div class="avatar-container" [matMenuTriggerFor]="profile">
     <span class="avatar-initial">BB</span>
   </div>

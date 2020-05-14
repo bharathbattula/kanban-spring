@@ -1,10 +1,13 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatToolbar} from '@angular/material';
 import {RestService} from '../../shared/services/rest.service';
 import {DataService} from '../../shared/services/data.service';
 import {Router} from '@angular/router';
 import {UserSession} from "../../shared/model/UserSession";
 import {Subscription} from "rxjs";
+import {Project} from "../../shared/model/Project";
+import * as _ from 'lodash';
+import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-header',
@@ -15,10 +18,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @ViewChild('appToolbar', {static: true}) appToolbar: MatToolbar;
 
-  @Output() public sidenavToggle = new EventEmitter();
-
   private currentUser: UserSession;
   private currentUserSubscriber: Subscription;
+
+  private projects: Project[] = [];
+  private projectSubscriber: Subscription;
 
   constructor(private rest: RestService, private dataService: DataService, private router: Router) {
     this.currentUserSubscriber = this.rest.currentUser.subscribe(user => this.currentUser = user);
@@ -26,11 +30,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadProjects();
+
+    this.projectSubscriber = this.dataService.projectData$.subscribe(
+      projects => {
+        _.forEach(projects,
+          project => {
+            if (!_.find(this.projects, currentProject => currentProject.name === project.name)) {
+              this.projects.push(project);
+            }
+          });
+      },
+      error => console.log(error)
+    );
+
   }
 
-  toggleNavigation() {
-    this.sidenavToggle.emit();
-  }
 
   loadProjects() {
 
@@ -49,5 +63,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.currentUserSubscriber.unsubscribe();
+    this.projectSubscriber.unsubscribe();
+  }
+
+  projectChange($event: MatSelectChange) {
+
+    const project = $event.value;
+
+    if (project && project.id) {
+
+      this.dataService.setCurrentProjectValue(project);
+
+      this.router.navigate(['app', 'project', project.name]);
+    }
   }
 }

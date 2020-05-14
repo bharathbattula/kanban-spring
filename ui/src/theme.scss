@@ -3,9 +3,9 @@
 
 @include mat-core();
 
-$app-primary: mat-palette($mat-blue-gray);
-$app-accent: mat-palette($mat-amber);
-$app-secondary: mat-palette($mat-deep-orange);
+$app-primary: mat-palette($mat-gray, 50);
+$app-accent: mat-palette($mat-red, 400);
+$app-secondary: mat-palette($mat-blue, A400);
 
 
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-secondary);
