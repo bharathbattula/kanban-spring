@@ -36,7 +36,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   subscriber: Subscription;
 
   constructor(private rest: RestService, private dataService: DataService, private router: Router, private activatedRoute: ActivatedRoute) {
-
   }
 
   ngOnInit() {
@@ -64,8 +63,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       },
       (error) => console.log(error)
     );
-
-    // _.forEach(this.list, l => _.forEach(l, t => t.user.fullName = _.startCase(t.user.firstName + ' ' + t.user.lastName)));
   }
 
   loadProjectData() {
@@ -113,5 +110,4 @@ export class BoardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriber.unsubscribe();
   }
-
 }

@@ -5,7 +5,6 @@
   flex-wrap: nowrap;
   flex-direction: row;
   overflow-x: auto;
-  position: relative;
 
   .add-list-button {
     padding: 5px;
@@ -20,6 +19,8 @@
 }
 
 app-list {
+  width: 245px;
+  margin-bottom: 5px;
   margin-left: 5px;
 }
 
@@ -138,3 +139,43 @@ mat-chip-list {
     }
   }
 }
+
+/*
+.task-detail-container {
+  width: 300px;
+  height: 90%;
+  position: absolute;
+  right: -301px;
+  border: 1px solid #f443366b;
+  background: #FFFFFF;
+  display: none;
+}
+
+.task-detail-container-reveal {
+  display: block;
+  right: 0px;
+  animation: reveal 0.5s linear;
+}
+
+.task-detail-container-hide {
+  animation: hide 0.5s linear;
+}
+
+@keyframes reveal {
+  from {
+    right: -301px;
+  }
+  to {
+    right: 0px;
+  }
+}
+
+@keyframes hide {
+  from {
+    right: 0px;
+  }
+  to {
+    right: -301px;
+  }
+}
+*/

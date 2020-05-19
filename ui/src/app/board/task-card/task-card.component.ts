@@ -3,6 +3,7 @@ import {Task} from '../../shared/model/Task';
 import {ListComponent} from '../list/list.component';
 import * as moment from 'moment';
 import {User} from "../../shared/model/User";
+import {DataService} from "../../shared/services/data.service";
 
 @Component({
   selector: 'app-task-card',
@@ -17,7 +18,7 @@ export class TaskCardComponent implements OnInit {
   @Input()
   listComponent: ListComponent;
 
-  constructor() {
+  constructor(private dataService: DataService) {
   }
 
   ngOnInit() {
@@ -31,4 +32,7 @@ export class TaskCardComponent implements OnInit {
     return `${user.firstName ? user.firstName.charAt(0).toUpperCase() : ''}${user.lastName ? user.lastName.charAt(0).toUpperCase() : ''}`;
   }
 
+  openTaskDetailDrawer($event: MouseEvent) {
+    this.dataService.setCurrentTask(this.task);
+  }
 }

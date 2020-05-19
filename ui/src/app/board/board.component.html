@@ -1,39 +1,46 @@
-<div class="board-container" cdkDropListGroup>
-  <app-list *ngFor="let l of list" [list]="l"></app-list>
-  <div class="add-list-button">
-    <button mat-stroked-button color="accent" (click)="currentState = currentState === 'hidden' ? 'show' : 'hidden'">
-      <mat-icon>add</mat-icon>
-      <span>Add List</span>
-    </button>
+<mat-drawer-container class="example-container" hasBackdrop="true">
+  <mat-drawer #drawer mode="over" style="width: 200px" position="end">
+    <app-task-detail [drawer]="drawer"></app-task-detail>
+  </mat-drawer>
+  <mat-drawer-content class="board-container" cdkDropListGroup>
+    <app-list *ngFor="let l of list" [list]="l"></app-list>
+    <div class="add-list-button">
+      <button mat-stroked-button color="accent"
+              (click)="currentState = currentState === 'hidden' ? 'show' : 'hidden'">
+        <mat-icon>add</mat-icon>
+        <span>Add List</span>
+      </button>
 
-    <mat-card [@reveal]="currentState" [class.mat-elevation-z8]="true" class="form-card">
-      <div class="add-list-form-container">
-        <form #listForm="ngForm">
-          <mat-form-field hideRequiredMarker>
-            <input matInput placeholder="Add new list" maxlength="10" minlength="3" required
-                   #listName>
-          </mat-form-field>
-          <button mat-icon-button type="submit" color="accent" aria-label="Save new list"
-                  (click)="addNewList(listName)" [disabled]="addingList">
-            <mat-icon *ngIf="!addingList">check</mat-icon>
-            <mat-icon *ngIf="addingList">
-              <mat-spinner color="accent" diameter="25"></mat-spinner>
-            </mat-icon>
-          </button>
-          <mat-error></mat-error>
-        </form>
-      </div>
-    </mat-card>
-  </div>
-</div>
+      <mat-card [@reveal]="currentState" [class.mat-elevation-z8]="true" class="form-card">
+        <div class="add-list-form-container">
+          <form #listForm="ngForm">
+            <mat-form-field hideRequiredMarker>
+              <input matInput placeholder="Add new list" maxlength="10" minlength="3" required
+                     #listName>
+            </mat-form-field>
+            <button mat-icon-button type="submit" color="accent" aria-label="Save new list"
+                    (click)="addNewList(listName)" [disabled]="addingList">
+              <mat-icon *ngIf="!addingList">check</mat-icon>
+              <mat-icon *ngIf="addingList">
+                <mat-spinner color="accent" diameter="25"></mat-spinner>
+              </mat-icon>
+            </button>
+            <mat-error></mat-error>
+          </form>
+        </div>
+      </mat-card>
 
-<div class="bottom-fab">
-  <button mat-fab color="accent" matTooltip="Add new list" matTooltipPosition="before"
-          [routerLink]="['settings']">
-    <mat-icon>settings</mat-icon>
-  </button>
-</div>
+    </div>
 
+    <div class="bottom-fab">
+      <button mat-fab color="accent" matTooltip="Add new list" matTooltipPosition="before"
+              [routerLink]="['settings']">
+        <mat-icon>settings</mat-icon>
+      </button>
+    </div>
+
+  </mat-drawer-content>
+</mat-drawer-container>
 
 <!--<mat-card class="add-list-form-container">
   <mat-toolbar color="primary">
