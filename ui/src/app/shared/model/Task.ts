@@ -8,4 +8,6 @@ export interface Task {
   creator?: User;
   deadLine?: Date;
   participants?: User[];
+  edit?: false;
+  listId?: number;
 }
