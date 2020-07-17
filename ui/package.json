@@ -28,7 +28,7 @@
     "@ngrx/store": "^9.2.0",
     "@ngrx/store-devtools": "^9.2.0",
     "jquery": "^3.4.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "ngx-cookie-service": "^2.3.0",
     "roboto-fontface": "^0.10.0",
