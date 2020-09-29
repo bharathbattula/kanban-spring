@@ -3,19 +3,20 @@
     <p class="task-number">
       {{'#' + task.id}}
     </p>
-    <h4 class="task-name" (click)="openTaskDetailDrawer($event)">
+    <h4 class="task-name" (click)="openTaskDetail($event)">
       {{task.title}}
     </h4>
   </div>
   <div class="creator-container">
-    <mat-label>Creator:</mat-label>
     <div>
       <img
         src="https://cdn.glitch.com/c10f12bb-fff7-4b57-b3d7-db54cfd60226%2Fimg_avatar.png?v=1576924695397"
         class="avatars__img" *ngIf="task.creator.imgSrc"
       />
       <span class="avatars__initials" *ngIf="!task.creator.imgSrc">{{task.creator.initials}}</span>
-      <p>{{task.creator.firstName + ' ' + task.creator.lastName}}</p>
+    </div>
+    <div>
+      <p>Bharath Battula</p>
     </div>
   </div>
   <div class="inner-container">
