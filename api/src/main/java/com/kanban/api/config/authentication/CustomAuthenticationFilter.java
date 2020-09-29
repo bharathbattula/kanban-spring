@@ -15,12 +15,15 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
@@ -38,6 +41,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain) throws ServletException, IOException {
+
 		try {
 
 			LOGGER.info("Request ==> {}", request.getRequestURI());
@@ -46,16 +50,16 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
 			LOGGER.info("Token ==> {}", token);
 
-
 			final Secured secured = this.hasAnnotation(request);
-
 
 			if (StringUtils.hasText(token) && this.tokenProvider.validateToken(token)) {
 
 				final Long userId = this.tokenProvider.getUserIdFromToken(token);
 
+				final Long projectId = this.getProjectId(request);
+
 				final UserDetails userDetails =
-						this.userDetailService.loadUserByUserId(userId, secured != null ? 9L : null);
+						this.userDetailService.loadUserByUserId(userId, projectId);
 
 				final UsernamePasswordAuthenticationToken authenticationToken =
 						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -84,12 +88,11 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
 	private Secured hasAnnotation(final HttpServletRequest request) {
 
-		final RequestMappingHandlerMapping handlerMapping = (RequestMappingHandlerMapping) this.applicationContext.getBean("requestMappingHandlerMapping");
-
-		final HandlerExecutionChain handler;
-
 		try {
-			handler = handlerMapping.getHandler(request);
+
+			final RequestMappingHandlerMapping handlerMapping = (RequestMappingHandlerMapping) this.applicationContext.getBean("requestMappingHandlerMapping");
+
+			final HandlerExecutionChain handler = handlerMapping.getHandler(request);
 
 			final HandlerMethod handlerMethod = (HandlerMethod) handler.getHandler();
 			return handlerMethod.getMethodAnnotation(Secured.class);
@@ -97,6 +100,26 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 		} catch (final Exception e) {
 			return null;
 		}
+	}
+
+	private Long getProjectId(final HttpServletRequest request) {
+
+		final UriComponents uriComponents = UriComponentsBuilder.fromPath(request.getRequestURI()).build();
+
+		final List<String> pathSegments = uriComponents.getPathSegments();
+
+		return pathSegments.stream()
+				.filter(s -> {
+					try {
+						Long.parseLong(s);
+						return true;
+					} catch (NumberFormatException e) {
+						return false;
+					}
+				}).map(Long::parseLong)
+				.findFirst()
+				.orElse(null);
+
 	}
 
 }

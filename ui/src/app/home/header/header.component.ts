@@ -6,7 +6,6 @@ import {Router} from '@angular/router';
 import {UserSession} from "../../shared/model/UserSession";
 import {Subscription} from "rxjs";
 import {Project} from "../../shared/model/Project";
-import * as _ from 'lodash';
 import {MatSelectChange} from "@angular/material/select";
 
 @Component({
@@ -25,13 +24,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private projectSubscriber: Subscription;
 
   constructor(private rest: RestService, private dataService: DataService, private router: Router) {
-    this.currentUserSubscriber = this.rest.currentUser.subscribe(user => this.currentUser = user);
   }
 
   ngOnInit() {
+
+    this.currentUserSubscriber = this.rest.currentUser.subscribe(user => this.currentUser = user);
+
     this.loadProjects();
 
-    this.projectSubscriber = this.dataService.projectData$.subscribe(
+    /*this.projectSubscriber = this.dataService.projectData$.subscribe(
       projects => {
         _.forEach(projects,
           project => {
@@ -41,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           });
       },
       error => console.log(error)
-    );
+    );*/
 
   }
 
@@ -52,6 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .then(projects => {
         //adding data to BehaviourSubject, subscriber get's the data in sidenav.component.ts
         this.dataService.projectDataSource.next(projects);
+        this.projects = projects;
       })
       .catch(error => {
       });
@@ -63,7 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.currentUserSubscriber.unsubscribe();
-    this.projectSubscriber.unsubscribe();
+    // this.projectSubscriber.unsubscribe();
   }
 
   projectChange($event: MatSelectChange) {

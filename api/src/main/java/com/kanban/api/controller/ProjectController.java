@@ -59,9 +59,9 @@ public class ProjectController {
 		}
 	}
 
-	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping
 	public ResponseEntity getProjects(final Authentication authentication) {
+
 		try {
 
 			final Object details = authentication.getPrincipal();
@@ -71,6 +71,7 @@ public class ProjectController {
 
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(Collections.singletonMap(ERROR, "Something went wrong"));
+
 		} catch (final Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(Collections.singletonMap(ERROR, "Failed to get the project details"));

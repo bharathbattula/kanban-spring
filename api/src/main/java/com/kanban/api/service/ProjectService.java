@@ -49,7 +49,11 @@ public class ProjectService {
 
 		project.setCreator(user);
 
-		return this.projectRepository.save(project);
+		final Project projectObj = this.projectRepository.save(project);
+
+		projects.add(projectObj);
+
+		return projectObj;
 	}
 
 	public List getAllProjects(final Long userId) {
@@ -59,6 +63,8 @@ public class ProjectService {
 	@Transactional
 	public void deleteProject(final Long projectId) {
 		this.projectRepository.deleteById(projectId);
+
+		projects.removeIf(project -> project.getId().equals(projectId));
 	}
 
 	@Transactional
