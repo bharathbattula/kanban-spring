@@ -33,6 +33,7 @@ export class TaskCardComponent implements OnInit {
   }
 
   openTaskDetailDrawer($event: MouseEvent) {
+    this.task.listId = this.listComponent.list.id;
     this.dataService.setCurrentTask(this.task);
   }
 }

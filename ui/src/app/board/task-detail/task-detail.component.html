@@ -1,8 +1,120 @@
-
 <div class="container">
-  <button mat-stroked-button (click)="goBack($event)" color="accent">
-    <mat-icon>arrow_back</mat-icon>
-    Go Back
+  <button mat-icon-button (click)="goBack()" class="close-button">
+    <mat-icon>close</mat-icon>
   </button>
 
+  <form [formGroup]="taskForm">
+    <div class="task-detail-container" *ngIf="task">
+      <div class="card-title">
+        <p class="task-number">
+          {{'#' + task.id}}
+        </p>
+        <span style="flex: 1 1 auto"></span>
+        <button mat-icon-button
+                (click)="task.edit ? task.edit = false: task.edit = true">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+
+      <div class="field-container">
+        <h2 class="task-name" *ngIf="!task.edit">
+          {{task.title}}
+        </h2>
+        <mat-form-field *ngIf="task.edit">
+          <mat-label>Title</mat-label>
+          <input matInput [value]="task.title" formControlName="title">
+        </mat-form-field>
+      </div>
+
+      <div class="field-container">
+        <p class="task-name" *ngIf="!task.edit">
+          {{task.description}}
+        </p>
+        <mat-form-field *ngIf="task.edit">
+          <mat-label>Description</mat-label>
+          <textarea matInput [value]="task.description" formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="field-container">
+        <div class="deadline" *ngIf="!task.edit">
+          <mat-icon>access_time</mat-icon>
+          <span class="deadline">{{task.deadLine | date:"dd MMM"}}</span>
+        </div>
+        <mat-form-field *ngIf="task.edit">
+          <input matInput [matDatepicker]="picker" placeholder="Choose a deadline"
+                 [value]="task.deadLine" formControlName="deadline">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="field-container">
+
+        <div *ngIf="!task.edit" class="creator-container">
+          <mat-label>Working:</mat-label>
+          <div>
+            <ul class="avatars">
+              <li class="avatars__item" *ngFor="let p of task.participants; let i = index">
+                <img
+                  src="https://cdn.glitch.com/c10f12bb-fff7-4b57-b3d7-db54cfd60226%2Fimg_avatar.png?v=1576924695397"
+                  class="avatars__img" *ngIf="p.imgSrc"
+                />
+                <span class="avatars__initials" *ngIf="!p.imgSrc">{{returnInitials(p)}}</span>
+                <p>{{p.firstName + ' ' + p.lastName}}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <mat-form-field *ngIf="task.edit">
+          <mat-chip-list #partipates>
+            <mat-chip *ngFor="let user of participants"
+                      [selectable]="true"
+                      [removable]="true"
+                      (removed)="removeParticipant(user)">
+              {{user.username}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input matInput
+                   [matChipInputFor]="partipates"
+                   [matAutocomplete]="userAuto"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="true"
+                   (matChipInputTokenEnd)="addParticipants($event)"
+                   placeholder="Participants"
+                   formControlName="participants"
+            >
+          </mat-chip-list>
+          <mat-autocomplete #userAuto (optionSelected)="selected($event)">
+            <mat-option *ngFor="let user of users" [value]="user.username">
+              {{user.username}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="field-container creator-container">
+        <mat-label>Creator:</mat-label>
+        <div>
+          <img
+            src="https://cdn.glitch.com/c10f12bb-fff7-4b57-b3d7-db54cfd60226%2Fimg_avatar.png?v=1576924695397"
+            class="avatars__img" *ngIf="task.creator.imgSrc"
+          />
+          <span class="avatars__initials" *ngIf="!task.creator.imgSrc">{{returnInitials(task.creator)}}</span>
+          <p>{{task.creator.firstName + ' ' + task.creator.lastName}}</p>
+        </div>
+      </div>
+      <div class="field-container" *ngIf="task.edit">
+        <button mat-raised-button
+                type="submit"
+                color="primary"
+                [disabled]="!taskForm.valid"
+                (click)="update($event)"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
 </div>
