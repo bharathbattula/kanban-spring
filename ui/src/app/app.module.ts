@@ -25,10 +25,6 @@ import {ConfirmationComponent} from "./dialog/confirmation/confirmation.componen
 import {TaskDetailComponent} from './board/task-detail/task-detail.component';
 import {ProjectSettingComponent} from './project-setting/project-setting.component';
 import {MatTableModule} from "@angular/material/table";
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
-import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
@@ -58,9 +54,6 @@ import { EffectsModule } from '@ngrx/effects';
         MatAutocompleteModule,
         FormsModule,
         MatTableModule,
-        StoreModule.forRoot({}, {}),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-        EffectsModule.forRoot([]),
 
     ],
   providers: [

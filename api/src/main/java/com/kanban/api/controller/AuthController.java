@@ -2,12 +2,13 @@ package com.kanban.api.controller;
 
 import com.kanban.api.config.authentication.JwtTokenProvider;
 import com.kanban.api.config.authentication.UserPrincipal;
-import com.kanban.api.model.User;
+import com.kanban.api.exception.BadRequestException;
 import com.kanban.api.model.UserSession;
-import com.kanban.api.repository.RoleRepository;
-import com.kanban.api.repository.UserRepository;
 import com.kanban.api.request.LoginDto;
 import com.kanban.api.request.SignUpDto;
+import com.kanban.api.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,28 +26,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Collections;
 
-import static com.kanban.api.common.Constants.BASE_API;
-import static com.kanban.api.common.Constants.ERROR;
-import static com.kanban.api.common.Constants.SUCCESS;
+import static com.kanban.api.common.Constants.*;
 
 @RestController
 @RequestMapping(BASE_API + "/auth")
 public class AuthController {
 
-	@Autowired
-	AuthenticationManager authenticationManager;
+	public static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+
+	private final AuthenticationManager authenticationManager;
+	private final JwtTokenProvider tokenProvider;
+
+	private final UserService userService;
 
 	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	RoleRepository roleRepository;
-
-	@Autowired
-	PasswordEncoder passwordEncoder;
-
-	@Autowired
-	JwtTokenProvider tokenProvider;
+	public AuthController(final AuthenticationManager authenticationManager, final JwtTokenProvider tokenProvider, final UserService userService) {
+		this.authenticationManager = authenticationManager;
+		this.tokenProvider = tokenProvider;
+		this.userService = userService;
+	}
 
 	@PostMapping("signin")
 	public ResponseEntity<?> loginUser(@Valid @RequestBody final LoginDto loginDto, final HttpServletResponse response) {
@@ -77,23 +74,19 @@ public class AuthController {
 
 	@PostMapping("signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody final SignUpDto signUpDto) {
-		if (this.userRepository.existsByUsername(signUpDto.getUsername())) {
-			return new ResponseEntity(Collections.singletonMap(ERROR, "Username already exist"), HttpStatus.BAD_REQUEST);
+		try {
+
+			return ResponseEntity.ok(this.userService.saveUser(signUpDto));
+
+		} catch (final BadRequestException e) {
+			LOGGER.error("User registration failed", e);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(Collections.singletonMap(ERROR, e.getMessage()));
+
+		} catch (final Exception e) {
+			LOGGER.error("User registration failed", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap(ERROR, INTERNAL_SERVER_ERROR_MSG));
 		}
-
-		if (this.userRepository.existsByEmail(signUpDto.getEmail())) {
-			return new ResponseEntity(Collections.singletonMap(ERROR, "Email already exist"), HttpStatus.BAD_REQUEST);
-		}
-
-		final User user = new User(signUpDto.getFirstName(), signUpDto.getLastName(), signUpDto.getUsername(),
-				signUpDto.getEmail(), signUpDto.getPassword());
-
-
-		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-
-		this.userRepository.save(user);
-
-		return ResponseEntity.ok().body(Collections.singletonMap(SUCCESS, "User created successfully"));
 	}
 
 }
